@@ -1,32 +1,31 @@
-import { v4 as uuidv4 } from "uuid";
 import { Express, Request, Response, NextFunction } from "express";
 
 import {
   IWebServiceEndpoint,
   IExpressRequestHandler,
-  LintGitRepoV1Endpoint as Constants,
 } from "@dci-lint/core-api";
-
-import { LintGitRepoService, registerWebServiceEndpoint } from "@dci-lint/core";
 
 import { Logger, Checks, LogLevelDesc, LoggerProvider } from "@dci-lint/common";
 
-export interface ILintGitRepoV1EndpointOptions {
+import { registerWebServiceEndpoint, } from "@dci-lint/core";
+
+import { LintGithubOrgV1Endpoint as Constants, } from "@dci-lint/core-api";
+
+export interface ILintGithubOrgV1EndpointOptions {
   logLevel?: LogLevelDesc;
-  svc: LintGitRepoService;
 }
 
-export class LintGitRepoV1Endpoint {
+export class LintGithubOrgV1Endpoint {
 
-  public static readonly CLASS_NAME = "LintGitRepoV1Endpoint";
+  public static readonly CLASS_NAME = "LintGithubOrgV1Endpoint";
 
   private readonly log: Logger;
 
   public get className() {
-    return LintGitRepoV1Endpoint.CLASS_NAME;
+    return LintGithubOrgV1Endpoint.CLASS_NAME;
   }
 
-  constructor(public readonly options: ILintGitRepoV1EndpointOptions) {
+  constructor(public readonly options: ILintGithubOrgV1EndpointOptions) {
     const fnTag = `${this.className}#constructor()`;
     Checks.truthy(options, `${fnTag} arg options`);
 
@@ -35,19 +34,20 @@ export class LintGitRepoV1Endpoint {
     this.log = LoggerProvider.getOrCreate({ level, label});
   }
 
+
   public getExpressRequestHandler(): IExpressRequestHandler {
     return this.handleRequest.bind(this);
   }
 
-  getPath(): string {
+  public getPath(): string {
     return Constants.HTTP_PATH;
   }
 
-  getVerbLowerCase(): string {
+  public getVerbLowerCase(): string {
     return Constants.HTTP_VERB_LOWER_CASE;
   }
 
-  registerExpress(app: Express): IWebServiceEndpoint {
+  public registerExpress(app: Express): IWebServiceEndpoint {
     registerWebServiceEndpoint(app, this);
     return this;
   }
@@ -59,7 +59,7 @@ export class LintGitRepoV1Endpoint {
   ): Promise<void> {
     try {
       this.log.debug(`GET ${this.getPath()}`);
-      // const body: LintGithubOrgResponse = this.options.svc.run(req.body);
+      // const body: LintGithubOrgResponse = { };
       const body: any = { };
       res.status(200);
       res.json(body);

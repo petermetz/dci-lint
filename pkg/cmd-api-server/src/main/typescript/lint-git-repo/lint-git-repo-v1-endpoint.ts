@@ -4,53 +4,50 @@ import { Express, Request, Response, NextFunction } from "express";
 import {
   IWebServiceEndpoint,
   IExpressRequestHandler,
+  LintGitRepoV1Endpoint as Constants,
 } from "@dci-lint/core-api";
 
-// import { LintGithubOrgRequest, LintGithubOrgResponse } from "@dci-lint/core-api";
+import { LintGitRepoService, registerWebServiceEndpoint } from "@dci-lint/core";
 
 import { Logger, Checks, LogLevelDesc, LoggerProvider } from "@dci-lint/common";
 
-
-import { registerWebServiceEndpoint, } from "@dci-lint/core";
-
-import { LintGithubOrgV1Endpoint as Constants, } from "@dci-lint/core-api";
-
-export interface ILintGithubOrgOptions {
+export interface ILintGitRepoV1EndpointOptions {
   logLevel?: LogLevelDesc;
+  svc: LintGitRepoService;
 }
 
-export class LintGithubOrg implements IWebServiceEndpoint {
+export class LintGitRepoV1Endpoint {
 
-  public static readonly CLASS_NAME = "LintGithubOrg";
+  public static readonly CLASS_NAME = "LintGitRepoV1Endpoint";
 
   private readonly log: Logger;
 
   public get className() {
-    return LintGithubOrg.CLASS_NAME;
+    return LintGitRepoV1Endpoint.CLASS_NAME;
   }
 
-  constructor(public readonly options: ILintGithubOrgOptions) {
+  constructor(public readonly options: ILintGitRepoV1EndpointOptions) {
     const fnTag = `${this.className}#constructor()`;
     Checks.truthy(options, `${fnTag} arg options`);
 
     const level = this.options.logLevel || "INFO";
     const label = this.className;
-    this.log = LoggerProvider.getOrCreate({ level, label});
+    this.log = LoggerProvider.getOrCreate({ level, label });
   }
 
   public getExpressRequestHandler(): IExpressRequestHandler {
     return this.handleRequest.bind(this);
   }
 
-  getPath(): string {
+  public getPath(): string {
     return Constants.HTTP_PATH;
   }
 
-  getVerbLowerCase(): string {
+  public getVerbLowerCase(): string {
     return Constants.HTTP_VERB_LOWER_CASE;
   }
 
-  registerExpress(app: Express): IWebServiceEndpoint {
+  public registerExpress(app: Express): IWebServiceEndpoint {
     registerWebServiceEndpoint(app, this);
     return this;
   }
@@ -62,11 +59,11 @@ export class LintGithubOrg implements IWebServiceEndpoint {
   ): Promise<void> {
     try {
       this.log.debug(`GET ${this.getPath()}`);
-      // const body: LintGithubOrgResponse = { };
-      const body: any = { };
+      const resBody = await this.options.svc.run(req.body);
       res.status(200);
-      res.json(body);
+      res.json(resBody);
     } catch (ex) {
+      this.log.error(`Failed to serve req ${this.getPath()}`, ex);
       res.status(500);
       res.json({ error: ex.stack });
     }
