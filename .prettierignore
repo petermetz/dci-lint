@@ -1,0 +1,6 @@
+*.d.ts
+**/dist/
+**/bin/
+**/.nyc_output/
+**/www/
+**/generated/

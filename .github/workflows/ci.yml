@@ -1,0 +1,39 @@
+name: Continuous Integration
+
+on: [pull_request, push]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+
+    strategy:
+      fail-fast: true
+      max-parallel: 16
+      matrix:
+        os: [ubuntu-20.04, ubuntu-18.04]
+        node-version: [v12.13.0, v14.15.1]
+        experimental: [false]
+
+    steps:
+    - name: Set up JDK 8 (OpenAPI generator needs it)
+      uses: actions/setup-java@v1.4.3
+      with:
+        java-version: '8.0.275' # The JDK version to make available on the path.
+        java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
+        architecture: x64 # (x64 or x86) - defaults to x64
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2.1.2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - uses: actions/checkout@v2.3.4
+
+    - run: npm ci
+    - run: ./node_modules/.bin/lerna clean --yes
+    - run: ./node_modules/.bin/lerna bootstrap
+    - run: npm run build:dev:backend
+    - run: npm run test:unit -- --bail
+    - run: npm run test:integration -- --bail

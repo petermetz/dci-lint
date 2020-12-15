@@ -1,0 +1,65 @@
+{
+  "name": "@dci-lint/core-api",
+  "version": "0.2.0",
+  "description": "Contains type definitions/interfaces for the kernel of the codebase. Kept separate from the implementation so that it is easier to use it as a dependency.",
+  "main": "dist/lib/main/typescript/index.js",
+  "mainMinified": "dist/core-api.node.umd.min.js",
+  "browser": "dist/core-api.web.umd.js",
+  "browserMinified": "dist/core-api.web.umd.min.js",
+  "module": "dist/lib/main/typescript/index.js",
+  "types": "dist/types/main/typescript/index.d.ts",
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "export-open-api-spec": "ts-node src/main/typescript/openapi-spec.ts",
+    "pregenerate-sdk": "npm-run-all export-open-api-spec",
+    "generate-sdk": "openapi-generator generate --input-spec src/main/json/generated/openapi-spec.json -g typescript-axios -o ./src/main/typescript/generated/openapi/typescript-axios/",
+    "pretsc": "npm run generate-sdk",
+    "tsc": "tsc --project ./tsconfig.json",
+    "webpack": "npm-run-all webpack:dev webpack:prod",
+    "webpack:dev": "npm-run-all webpack:dev:node webpack:dev:web",
+    "webpack:dev:web": "webpack --env=dev --target=web --config ../../webpack.config.js",
+    "webpack:dev:node": "webpack --env=dev --target=node --config ../../webpack.config.js",
+    "webpack:prod": "npm-run-all webpack:prod:node webpack:prod:web",
+    "webpack:prod:web": "webpack --env=prod --target=web --config ../../webpack.config.js",
+    "webpack:prod:node": "webpack --env=prod --target=node --config ../../webpack.config.js"
+  },
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petermetz/dci-lint.git"
+  },
+  "keywords": [
+  ],
+  "contributors": [
+    {
+      "name": "Please add yourself to the list of contributors",
+      "email": "your.name@example.com",
+      "url": "https://example.com"
+    },
+    {
+      "name": "Peter Somogyvari",
+      "email": "peter.somogyvari@accenture.com",
+      "url": "https://accenture.com"
+    }
+  ],
+  "LICENSE": "Apache-2.0 OR MIT",
+  "bugs": {
+    "url": "https://github.com/petermetz/dci-lint/issues"
+  },
+  "homepage": "https://github.com/petermetz/dci-lint#readme",
+  "devDependencies": {
+    "@types/express": "4.17.8",
+    "@types/joi": "14.3.4"
+  },
+  "dependencies": {
+    "axios": "0.20.0",
+    "joi": "14.3.1",
+    "openapi-types": "7.0.1",
+    "typescript-optional": "2.0.1"
+  }
+}

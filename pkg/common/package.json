@@ -1,0 +1,70 @@
+{
+  "name": "@dci-lint/common",
+  "version": "0.2.0",
+  "description": "Universal library used by both front end and back end components of Cactus. Aims to be a developer swiss army knife.",
+  "main": "dist/lib/main/typescript/index.js",
+  "mainMinified": "dist/common.node.umd.min.js",
+  "browser": "dist/common.web.umd.js",
+  "browserMinified": "dist/common.web.umd.min.js",
+  "module": "dist/lib/main/typescript/index.js",
+  "types": "dist/types/main/typescript/index.d.ts",
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "tsc": "tsc --project ./tsconfig.json",
+    "webpack": "npm-run-all webpack:dev webpack:prod",
+    "webpack:dev": "npm-run-all webpack:dev:node webpack:dev:web",
+    "webpack:dev:web": "webpack --env=dev --target=web --config ../../webpack.config.js",
+    "webpack:dev:node": "webpack --env=dev --target=node --config ../../webpack.config.js",
+    "webpack:prod": "npm-run-all webpack:prod:node webpack:prod:web",
+    "webpack:prod:web": "webpack --env=prod --target=web --config ../../webpack.config.js",
+    "webpack:prod:node": "webpack --env=prod --target=node --config ../../webpack.config.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=10",
+    "npm": ">=6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petermetz/dci-lint.git"
+  },
+  "keywords": [
+  ],
+  "contributors": [
+    {
+      "name": "Please add yourself to the list of contributors",
+      "email": "your.name@example.com",
+      "url": "https://example.com"
+    },
+    {
+      "name": "Peter Somogyvari",
+      "email": "peter.somogyvari@accenture.com",
+      "url": "https://accenture.com"
+    }
+  ],
+  "LICENSE": "Apache-2.0 OR MIT",
+  "bugs": {
+    "url": "https://github.com/petermetz/dci-lint/issues"
+  },
+  "homepage": "https://github.com/petermetz/dci-lint#readme",
+  "dependencies": {
+    "joi": "14.3.1",
+    "json-stable-stringify": "1.0.1",
+    "key-encoder": "2.0.3",
+    "loglevel": "1.6.7",
+    "loglevel-plugin-prefix": "0.8.4",
+    "secp256k1": "4.0.2",
+    "sha3": "2.1.3",
+    "typescript-optional": "2.0.1"
+  },
+  "devDependencies": {
+    "@types/joi": "14.3.4",
+    "@types/json-stable-stringify": "1.0.32",
+    "@types/secp256k1": "4.0.1",
+    "openapi-types": "7.0.1"
+  }
+}

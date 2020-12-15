@@ -1,0 +1,205 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "DCI Lint Core API",
+        "description": "Contains/describes the core API types for DCI Lint.",
+        "version": "0.2.0"
+    },
+    "servers": [],
+    "components": {
+        "schemas": {
+            "GlobPattern": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255,
+                "nullable": false,
+                "example": "**/*.txt"
+            },
+            "LinterError": {
+                "type": "object",
+                "required": [
+                    "file",
+                    "targetPhrasePatterns"
+                ],
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 255,
+                        "nullable": false
+                    },
+                    "targetPhrasePatterns": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "LintGithubOrgRequest": {
+                "required": [
+                    "organizationName"
+                ],
+                "properties": {
+                    "organizationName": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024,
+                        "nullable": false
+                    }
+                }
+            },
+            "LintGithubOrgResponse": {
+                "required": [
+                    "organizationName",
+                    "outcome"
+                ],
+                "properties": {
+                    "outcome": {
+                        "type": "string",
+                        "enum": [
+                            "dci-lint.lint-github-org-response.outcome.SUCCESS",
+                            "dci-lint.lint-github-org-response.outcome.INCONCLUSIVE",
+                            "dci-lint.lint-github-org-response.outcome.FAILURE"
+                        ]
+                    },
+                    "organizationName": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024,
+                        "nullable": false
+                    }
+                }
+            },
+            "LintGitRepoRequest": {
+                "required": [
+                    "cloneUrl",
+                    "targetPhrasePatterns"
+                ],
+                "properties": {
+                    "cloneUrl": {
+                        "type": "string",
+                        "minLength": 5,
+                        "maxLength": 1024,
+                        "nullable": false
+                    },
+                    "targetPhrasePatterns": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "includeFilePatterns": {
+                        "type": "array",
+                        "nullable": false,
+                        "minItems": 1,
+                        "maxItems": 100,
+                        "items": {
+                            "$ref": "#/components/schemas/GlobPattern",
+                            "nullable": false
+                        }
+                    },
+                    "excludeFilePatterns": {
+                        "type": "array",
+                        "nullable": false,
+                        "minItems": 1,
+                        "maxItems": 100,
+                        "items": {
+                            "$ref": "#/components/schemas/GlobPattern",
+                            "nullable": false
+                        }
+                    }
+                }
+            },
+            "LintGitRepoResponse": {
+                "required": [
+                    "cloneUrl",
+                    "outcome",
+                    "linterErrors"
+                ],
+                "properties": {
+                    "outcome": {
+                        "type": "string",
+                        "enum": [
+                            "dci-lint.lint-git-repo-response.outcome.SUCCESS",
+                            "dci-lint.lint-git-repo-response.outcome.INCONCLUSIVE",
+                            "dci-lint.lint-git-repo-response.outcome.FAILURE"
+                        ]
+                    },
+                    "linterErrors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/LinterError"
+                        }
+                    },
+                    "cloneUrl": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1024,
+                        "nullable": false
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/api/v1/lint-github-org": {
+            "post": {
+                "operationId": "lintGithubOrgV1",
+                "summary": "Lints a Github organization",
+                "description": "",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LintGithubOrgRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LintGithubOrgResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/lint-git-repo": {
+            "post": {
+                "operationId": "lintGitRepoV1",
+                "summary": "Lints a Git repository",
+                "description": "",
+                "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LintGitRepoRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LintGitRepoResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

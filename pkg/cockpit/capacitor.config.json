@@ -1,0 +1,8 @@
+{
+  "appId": "dci-lint",
+  "appName": "DCI Lint",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}
