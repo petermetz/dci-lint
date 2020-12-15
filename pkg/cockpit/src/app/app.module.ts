@@ -19,8 +19,8 @@ LoggerProvider.setLogLevel("TRACE");
 const log: Logger = LoggerProvider.getOrCreate({ label: "app-module" });
 
 log.debug("Running AppModule...");
-const cactusApiUrl = location.origin;
-log.debug("API_URL=%o", cactusApiUrl);
+const ApiUrl = location.origin;
+log.debug("API_URL=%o", ApiUrl);
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +32,7 @@ log.debug("API_URL=%o", cactusApiUrl);
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: API_URL,
-      useValue: cactusApiUrl,
+      useValue: ApiUrl,
     },
   ],
   bootstrap: [AppComponent],

@@ -17,9 +17,14 @@ import { OpenApiValidator } from "express-openapi-validator";
 import compression from "compression";
 import bodyParser from "body-parser";
 import cors from "cors";
-import { IApiServerOptions } from "./config/config-service";
-import { CACTUS_OPEN_API_JSON } from "./openapi-spec";
+
 import { Logger, LoggerProvider, Servers } from "@dci-lint/common";
+import { LintGitRepoService } from "@dci-lint/core";
+import { OPEN_API_JSON as OAS_CORE_API } from "@dci-lint/core-api";
+
+import { OPEN_API_JSON as OAS_API_SERVER } from "./openapi-spec";
+import { IApiServerOptions } from "./config/config-service";
+import { LintGitRepoV1Endpoint } from "./lint-git-repo/lint-git-repo-v1-endpoint";
 
 export interface IApiServerConstructorOptions {
   httpServerApi?: Server | SecureServer;
@@ -94,7 +99,7 @@ export class ApiServer {
         const { port } = addressInfoCockpit;
         const protocol = cockpitTlsEnabled ? "https:" : "http:";
         const httpUrl = `${protocol}//${host}:${port}`;
-        this.log.info(`Cactus Cockpit reachable ${httpUrl}`);
+        this.log.info(`Cockpit reachable ${httpUrl}`);
       }
 
       return { addressInfoCockpit, addressInfoApi };
@@ -213,7 +218,7 @@ export class ApiServer {
     // if the server is not listening but we don't car about any of those cases
     // so the casting here should be safe. Famous last words... I know.
     const addressInfo = this.httpServerCockpit.address() as AddressInfo;
-    this.log.info(`Cactus Cockpit net.AddressInfo`, addressInfo);
+    this.log.info(`Cockpit net.AddressInfo`, addressInfo);
 
     return addressInfo;
   }
@@ -243,7 +248,16 @@ export class ApiServer {
 
     this.log.info(`Starting to install web services...`);
 
-    // FIXME: install endpoints
+    {
+      const ep = new LintGitRepoV1Endpoint({
+        logLevel: this.options.config.logLevel,
+        svc: new LintGitRepoService({
+          logLevel: this.options.config.logLevel,
+        }),
+      });
+      ep.registerExpress(app as any);
+    }
+
     const apiPort: number = this.options.config.apiPort;
     const apiHost: string = this.options.config.apiHost;
 
@@ -267,7 +281,10 @@ export class ApiServer {
 
   createOpenApiValidator(): OpenApiValidator {
     return new OpenApiValidator({
-      apiSpec: CACTUS_OPEN_API_JSON,
+      apiSpec: {
+        ...OAS_API_SERVER,
+        ...OAS_CORE_API,
+      } as any,
       validateRequests: true,
       validateResponses: false,
     });

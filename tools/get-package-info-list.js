@@ -76,7 +76,7 @@ module.exports.getPackageInfoList = (ignorePatterns = []) => {
   pkgInfoList.forEach((pkgInfo) => {
     pkgInfo.localDependencies = dependencyGraph[pkgInfo.name]
       .filter((pkgName) => !ignorePatterns.some((ip) => ip.test(pkgName)))
-      .filter((pkgName) => pkgName.startsWith("@dci-lint/cactus"));
+      .filter((pkgName) => pkgName.startsWith("@dci-lint/"));
   });
 
   return pkgInfoList;

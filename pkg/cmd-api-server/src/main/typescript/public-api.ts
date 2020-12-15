@@ -5,5 +5,5 @@ export { launchApp } from "./cmd/dci-lint-server";
 export {
   ConfigService,
   IPluginImport,
-  IApiServerOptions as ICactusApiServerOptions,
+  IApiServerOptions,
 } from "./config/config-service";

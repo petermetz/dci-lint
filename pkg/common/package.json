@@ -1,7 +1,7 @@
 {
   "name": "@dci-lint/common",
   "version": "0.2.0",
-  "description": "Universal library used by both front end and back end components of Cactus. Aims to be a developer swiss army knife.",
+  "description": "Universal library used by both front end and back end components of DCI Lint. Aims to be a developer swiss army knife.",
   "main": "dist/lib/main/typescript/index.js",
   "mainMinified": "dist/common.node.umd.min.js",
   "browser": "dist/common.web.umd.js",

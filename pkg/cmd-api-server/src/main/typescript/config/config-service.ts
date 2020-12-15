@@ -3,11 +3,7 @@ import { existsSync, readFileSync } from "fs";
 import convict, { Schema, Config, SchemaObj } from "convict";
 import { ipaddress } from "convict-format-with-validator";
 import { v4 as uuidV4 } from "uuid";
-import {
-  LoggerProvider,
-  Logger,
-  LogLevelDesc,
-} from "@dci-lint/common";
+import { LoggerProvider, Logger, LogLevelDesc } from "@dci-lint/common";
 import { FORMAT_PLUGIN_ARRAY } from "./convict-plugin-array-format";
 import { IPki, SelfSignedPkiGenerator } from "./self-signed-pki-generator";
 
@@ -142,8 +138,7 @@ export class ConfigService {
         format: "*",
         env: "COCKPIT_WWW_ROOT",
         arg: "cockpit-www-root",
-        default:
-          "pkg/cmd-api-server/node_modules/@dci-lint/cockpit/www/",
+        default: "pkg/cmd-api-server/node_modules/@dci-lint/cockpit/www/",
       },
       cockpitCorsDomainCsv: {
         doc:
@@ -228,7 +223,7 @@ export class ConfigService {
         doc:
           "The Comma seperated list of domains to allow Cross Origin Resource Sharing from when " +
           "serving API requests. The wildcard (*) character is supported to allow CORS for any and all domains, " +
-          "however using it is not recommended unless you are developing or demonstrating something with Cactus.",
+          "however using it is not recommended unless you are developing or demonstrating something",
         format: "*",
         env: "API_CORS_DOMAIN_CSV",
         arg: "api-cors-domain-csv",
@@ -321,14 +316,11 @@ export class ConfigService {
   ): { [key: string]: string } {
     apiServerOptions = apiServerOptions || this.newExampleConfig();
     const configSchema: any = ConfigService.getConfigSchema();
-    return Object.entries(apiServerOptions).reduce(
-      (acc: any, [key, value]) => {
-        const schemaObj: any = configSchema[key];
-        acc[schemaObj.env] = value;
-        return acc;
-      },
-      {}
-    );
+    return Object.entries(apiServerOptions).reduce((acc: any, [key, value]) => {
+      const schemaObj: any = configSchema[key];
+      acc[schemaObj.env] = value;
+      return acc;
+    }, {});
   }
 
   public newExampleConfigConvict(

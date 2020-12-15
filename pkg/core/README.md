@@ -1,7 +1,7 @@
 # `@dci-lint/core`
 
 This module is responsible for providing the backbone for the rest of the packages
-when it comes to the features of Cactus.
+when it comes to the features of .
 
 The main difference between this and the `common` package is that this one
 does not guarantee it's features to work in the browser.

@@ -1,7 +1,7 @@
 {
   "name": "@dci-lint/test-cmd-api-server",
   "version": "0.2.0",
-  "description": "Integration tests for the DCI Lint API Client package (formerly known as the Cactus SDK package that has been renamed for to purpose of being less ambiguous)",
+  "description": "Integration tests for the DCI Lint API Client package (formerly known as the  SDK package that has been renamed for to purpose of being less ambiguous)",
   "main": "dist/lib/main/typescript/index.js",
   "mainMinified": "dist/test-cmd-api-server.node.umd.min.js",
   "browser": "dist/test-cmd-api-server.web.umd.js",
@@ -55,12 +55,16 @@
     "@dci-lint/api-client": "^0.2.0",
     "@dci-lint/cmd-api-server": "^0.2.0",
     "@dci-lint/common": "^0.2.0",
+    "@dci-lint/core": "^0.2.0",
     "@dci-lint/core-api": "^0.2.0",
     "axios": "0.19.2",
-    "joi": "14.3.1",
+    "body-parser": "1.19.0",
+    "express": "4.17.1",
     "typescript-optional": "2.0.1"
   },
   "devDependencies": {
-    "@types/joi": "14.3.4"
+    "@types/body-parser": "1.19.0",
+    "@types/express": "4.17.9",
+    "@types/express-serve-static-core": "4.17.17"
   }
 }

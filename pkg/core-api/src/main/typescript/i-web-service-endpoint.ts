@@ -5,10 +5,6 @@ import { IExpressRequestHandler } from "./i-express-request-handler";
  * Implementers of this interface are responsible for providing an API endpoint
  * that can be dynamically registered at runtime through the methods defined
  * on this interface.
- *
- * Basically this interface describes what a class needs to implement in order
- * to be able to operate as a Cactus API endpoint which is usually part of a
- * plugin.
  */
 export interface IWebServiceEndpoint {
   /**

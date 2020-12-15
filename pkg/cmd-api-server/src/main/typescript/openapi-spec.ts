@@ -1,14 +1,13 @@
 import * as OpenAPI from "express-openapi-validator/dist/framework/types";
 
-export const CACTUS_OPEN_API_JSON: OpenAPI.OpenAPIV3.Document = {
+export const OPEN_API_JSON: OpenAPI.OpenAPIV3.Document = {
   openapi: "3.0.3",
   info: {
     title: "DCI LInt API",
     description: "Interact with a DCI Lint backend deployment through HTTP.",
     version: "0.0.1",
   },
-  servers: [
-  ],
+  servers: [],
   components: {
     schemas: {
       MemoryUsage: {
@@ -87,5 +86,5 @@ export async function exportToFileSystemAsJson(): Promise<void> {
   console.log(
     `OpenApiSpec#exportToFileSystemAsJson() destination=${destination}`
   );
-  fs.writeFileSync(destination, JSON.stringify(CACTUS_OPEN_API_JSON, null, 4));
+  fs.writeFileSync(destination, JSON.stringify(OPEN_API_JSON, null, 4));
 }

@@ -6,7 +6,7 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import { LoggerProvider, Logger } from "@dci-lint/common";
 import { ApiClient, Configuration } from "@dci-lint/api-client";
-import { API_URL as API_URL } from "src/constants";
+import { API_URL } from "src/constants";
 
 @Component({
   selector: "app-root",
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    @Inject(API_URL) public readonly cactusApiUrl: string
+    @Inject(API_URL) public readonly ApiUrl: string
   ) {
     this.log = LoggerProvider.getOrCreate({
       label: "app-component",
@@ -52,7 +52,7 @@ export class AppComponent implements OnInit {
   }
 
   async testApi(): Promise<void> {
-    const configuration = new Configuration({ basePath: this.cactusApiUrl });
+    const configuration = new Configuration({ basePath: this.ApiUrl });
     // const res = await apiClient.apiv1something();
     // const resHealthCheck = await apiClient.apiV1ApiServerHealthcheckGet();
     // this.log.info(`ConsortiumNodeJwtGet`, res.data);

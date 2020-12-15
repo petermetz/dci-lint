@@ -3,16 +3,14 @@ import { OpenAPIV3 } from "openapi-types";
 import { LintGitRepoV1Endpoint } from "./lint-git-repo/lint-git-repo-endpoint-v1-constants";
 import { LintGithubOrgV1Endpoint } from "./lint-github-org/lint-github-org-endpoint-v1-constants";
 
-export const CACTUS_OPEN_API_JSON: OpenAPIV3.Document = {
+export const OPEN_API_JSON: OpenAPIV3.Document = {
   openapi: "3.0.3",
   info: {
     title: "DCI Lint Core API",
-    description:
-      "Contains/describes the core API types for DCI Lint.",
+    description: "Contains/describes the core API types for DCI Lint.",
     version: "0.2.0",
   },
-  servers: [
-  ],
+  servers: [],
   components: {
     schemas: {
       GlobPattern: {
@@ -36,7 +34,7 @@ export const CACTUS_OPEN_API_JSON: OpenAPIV3.Document = {
             type: "array",
             items: {
               type: "string",
-            }
+            },
           },
         },
       },
@@ -49,7 +47,7 @@ export const CACTUS_OPEN_API_JSON: OpenAPIV3.Document = {
             maxLength: 1024,
             nullable: false,
           },
-        }
+        },
       },
       LintGithubOrgResponse: {
         required: ["organizationName", "outcome"],
@@ -68,7 +66,7 @@ export const CACTUS_OPEN_API_JSON: OpenAPIV3.Document = {
             maxLength: 1024,
             nullable: false,
           },
-        }
+        },
       },
       LintGitRepoRequest: {
         required: ["cloneUrl", "targetPhrasePatterns"],
@@ -83,7 +81,7 @@ export const CACTUS_OPEN_API_JSON: OpenAPIV3.Document = {
             type: "array",
             items: {
               type: "string",
-            }
+            },
           },
           includeFilePatterns: {
             type: "array",
@@ -93,7 +91,7 @@ export const CACTUS_OPEN_API_JSON: OpenAPIV3.Document = {
             items: {
               $ref: "#/components/schemas/GlobPattern",
               nullable: false,
-            }
+            },
           },
           excludeFilePatterns: {
             type: "array",
@@ -103,9 +101,9 @@ export const CACTUS_OPEN_API_JSON: OpenAPIV3.Document = {
             items: {
               $ref: "#/components/schemas/GlobPattern",
               nullable: false,
-            }
+            },
           },
-        }
+        },
       },
       LintGitRepoResponse: {
         required: ["cloneUrl", "outcome", "linterErrors"],
@@ -122,7 +120,7 @@ export const CACTUS_OPEN_API_JSON: OpenAPIV3.Document = {
             type: "array",
             items: {
               $ref: "#/components/schemas/LinterError",
-            }
+            },
           },
           cloneUrl: {
             type: "string",
@@ -130,9 +128,9 @@ export const CACTUS_OPEN_API_JSON: OpenAPIV3.Document = {
             maxLength: 1024,
             nullable: false,
           },
-        }
-      }
-    }
+        },
+      },
+    },
   },
   paths: {
     [LintGithubOrgV1Endpoint.HTTP_PATH]: {
@@ -207,7 +205,7 @@ export async function exportToFileSystemAsJson(): Promise<void> {
   // tslint:disable-next-line: no-console
   console.log(`${fnTag} destination=${destination}`);
 
-  fs.writeFileSync(destination, JSON.stringify(CACTUS_OPEN_API_JSON, null, 4));
+  fs.writeFileSync(destination, JSON.stringify(OPEN_API_JSON, null, 4));
 }
 
 if (require.main === module) {
