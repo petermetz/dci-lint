@@ -5,7 +5,7 @@ import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import { LoggerProvider, Logger } from "@dci-lint/common";
-import { ApiClient, Configuration } from "@dci-lint/api-client";
+import { DefaultApi as DciLintApi, Configuration } from "@dci-lint/core-api";
 import { API_URL } from "src/constants";
 
 @Component({
@@ -17,8 +17,8 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
-      title: "Consortiums",
-      url: "/consortiums-inspector",
+      title: "Lint Git Repo",
+      url: "/git-repo-linter",
       icon: "color-filter",
     },
   ];
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    @Inject(API_URL) public readonly ApiUrl: string
+    @Inject(API_URL) public readonly apiUrl: string
   ) {
     this.log = LoggerProvider.getOrCreate({
       label: "app-component",
@@ -52,10 +52,14 @@ export class AppComponent implements OnInit {
   }
 
   async testApi(): Promise<void> {
-    const configuration = new Configuration({ basePath: this.ApiUrl });
-    // const res = await apiClient.apiv1something();
-    // const resHealthCheck = await apiClient.apiV1ApiServerHealthcheckGet();
-    // this.log.info(`ConsortiumNodeJwtGet`, res.data);
-    // this.log.info(`ApiServer HealthCheck Get:`, resHealthCheck.data);
+    const configuration = new Configuration({ basePath: this.apiUrl });
+    const apiClient = new DciLintApi(configuration);
+    const cloneUrl = "https://github.com/petermetz/random-english-words.git";
+
+    const res = await apiClient.lintGitRepoV1({
+      cloneUrl,
+      targetPhrasePatterns: ["a65c92c0-f0a2-4d2b-9cb9-783a29318b39"],
+    });
+    this.log.info(`lintGitRepoV1`, res.data);
   }
 }

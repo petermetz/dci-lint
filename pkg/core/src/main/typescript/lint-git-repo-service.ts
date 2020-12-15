@@ -1,22 +1,25 @@
 import path, { resolve } from "path";
 // import { promises as fs } from "fs";
 
-
-import fs from "fs-extra"
+import fs from "fs-extra";
 import fg from "fast-glob";
 import { v4 as uuidv4 } from "uuid";
 import temp from "temp";
-import simpleGit, { SimpleGit, SimpleGitOptions } from 'simple-git';
+import simpleGit, { SimpleGit, SimpleGitOptions } from "simple-git";
 
 import { Logger, Checks, LogLevelDesc, LoggerProvider } from "@dci-lint/common";
-import { LinterError, LintGitRepoRequest, LintGitRepoResponse, LintGitRepoResponseOutcomeEnum } from "@dci-lint/core-api";
+import {
+  LinterError,
+  LintGitRepoRequest,
+  LintGitRepoResponse,
+  LintGitRepoResponseOutcomeEnum,
+} from "@dci-lint/core-api";
 
 export interface ILintGitRepoServiceOptions {
   logLevel?: LogLevelDesc;
 }
 
 export class LintGitRepoService {
-
   public static readonly CLASS_NAME = "LintGitRepoService";
 
   private readonly log: Logger;
@@ -45,7 +48,7 @@ export class LintGitRepoService {
     try {
       const options: SimpleGitOptions = {
         baseDir: workspace,
-        binary: 'git',
+        binary: "git",
         maxConcurrentProcesses: 1,
       };
 
@@ -59,7 +62,7 @@ export class LintGitRepoService {
       this.log.debug(`Ignore file exists=%o`, ignoreFileExists);
 
       // If not overridden by the request, then we search all files.
-      const includePatterns = req.includeFilePatterns || ['*'];
+      const includePatterns = req.includeFilePatterns || ["**"];
 
       // By default we exclude the .git/ directory because it contains a bunch
       // of binary files for the most part.
@@ -83,10 +86,13 @@ export class LintGitRepoService {
         const hits = req.targetPhrasePatterns
           .map((p: string) => contents.match(p))
           .filter((m: RegExpMatchArray | null) => m != null)
-          .map((m: RegExpMatchArray | null) => ({
-            file: entry,
-            targetPhrasePatterns: m as string[],
-          } as LinterError));
+          .map(
+            (m: RegExpMatchArray | null) =>
+              ({
+                file: entry,
+                targetPhrasePatterns: m as string[],
+              } as LinterError)
+          );
 
         this.log.debug(`Hits=%o`, hits);
 
