@@ -77,7 +77,8 @@ ENV COCKPIT_PORT=$PORT
 ENV LOG_LEVEL=INFO
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["node /usr/src/app/pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js"]
+CMD ["npm", "start"]
 
-HEALTHCHECK --interval=1s --timeout=5s --start-period=1s --retries=30 CMD curl -vv -i -X OPTIONS http://127.0.0.1:4000/
+HEALTHCHECK --interval=1s --timeout=5s --start-period=1s --retries=30 \
+    CMD ["curl -v -i -X OPTIONS http://127.0.0.1:${COCKPIT_PORT}/"]
 
