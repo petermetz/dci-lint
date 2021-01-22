@@ -19,12 +19,12 @@ RUN npm run build:dev
 RUN ./node_modules/.bin/lerna clean --yes
 RUN ./node_modules/.bin/lerna bootstrap -- --production --no-optional
 
-RUN modclean --patterns="default:*" --path ./pkg/api-client/
-RUN modclean --patterns="default:*" --path ./pkg/cmd-api-server/
-RUN modclean --patterns="default:*" --path ./pkg/cockpit/
-RUN modclean --patterns="default:*" --path ./pkg/common/
-RUN modclean --patterns="default:*" --path ./pkg/core/
-RUN modclean --patterns="default:*" --path ./pkg/core-api/
+RUN modclean --run --patterns="default:*" --path ./pkg/api-client/
+RUN modclean --run --patterns="default:*" --path ./pkg/cmd-api-server/
+RUN modclean --run --patterns="default:*" --path ./pkg/cockpit/
+RUN modclean --run --patterns="default:*" --path ./pkg/common/
+RUN modclean --run --patterns="default:*" --path ./pkg/core/
+RUN modclean --run --patterns="default:*" --path ./pkg/core-api/
 
 RUN rm -rf ./pkg/test-api-client
 RUN rm -rf ./pkg/test-cmd-api-server
