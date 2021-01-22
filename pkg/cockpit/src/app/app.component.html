@@ -3,8 +3,8 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Cockpit</ion-list-header>
-          <ion-note>DCI Lint</ion-note>
+          <ion-list-header>DCI Lint</ion-list-header>
+          <ion-note>Cockpit</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
