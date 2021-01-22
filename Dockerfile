@@ -56,7 +56,7 @@ EXPOSE 3000
 # API
 EXPOSE 4000
 
-RUN ls -al
+COPY --chown=${APP_USER}:${APP_USER} ./healthcheck.sh /
 
 ENV COCKPIT_TLS_ENABLED=false
 ENV COCKPIT_CORS_DOMAIN_CSV=\*
@@ -80,5 +80,5 @@ ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["npm", "start"]
 
 HEALTHCHECK --interval=1s --timeout=5s --start-period=1s --retries=30 \
-    CMD ["curl -v -i -X OPTIONS http://127.0.0.1:${COCKPIT_PORT}/"]
+    CMD /healthcheck.sh
 
