@@ -34,6 +34,5 @@ jobs:
     - run: npm ci
     - run: ./node_modules/.bin/lerna clean --yes
     - run: ./node_modules/.bin/lerna bootstrap
-    - run: npm run build:dev:backend
+    - run: npm run build:dev
     - run: npm run test:unit -- --bail
-    - run: npm run test:integration -- --bail
