@@ -56,12 +56,13 @@
     "fast-glob": "3.2.4",
     "fs-extra": "9.0.1",
     "simple-git": "2.27.0",
-    "typescript-optional": "2.0.1"
+    "temp": "0.9.4",
+    "typescript-optional": "2.0.1",
+    "uuid": "8.3.2"
   },
   "devDependencies": {
     "@types/express": "4.17.8",
     "@types/fs-extra": "9.0.5",
-    "@types/temp": "0.8.34",
-    "temp": "0.9.4"
+    "@types/temp": "0.8.34"
   }
 }
