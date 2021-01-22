@@ -128,7 +128,7 @@ export class ConfigService {
       cockpitPort: {
         doc: "The HTTP port to bind the Cockpit webserver to.",
         format: "port",
-        env: "COCKPIT_PORT",
+        env: "PORT",
         arg: "cockpit-port",
         default: 3000,
       },
