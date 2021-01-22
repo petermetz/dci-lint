@@ -16,7 +16,7 @@ const main = async () => {
 
   LoggerProvider.setLogLevel(serverOptions.logLevel);
 
-  if (process.argv[2].includes("help")) {
+  if (process.argv.length > 2 && process.argv[2].includes("help")) {
     const helpText = ConfigService.getHelpText();
     // tslint:disable-next-line: no-console
     console.log(helpText);
