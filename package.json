@@ -4,6 +4,7 @@
   "scripts": {
     "configure": "npm ci && lerna clean --yes && lerna bootstrap && npm-run-all build:dev:backend generate-api-server-config",
     "generate-api-server-config": "node ./tools/generate-api-server-config.js",
+    "start": "node ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js",
     "start:api-server": "node ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js --config-file=.config.json",
     "start:cockpit": "lerna run --scope '*/cockpit' --stream serve:proxy",
     "export-open-api-spec": "ts-node -e 'import(\"./pkg/cmd-api-server/src/main/typescript/openapi-spec\").then((x) => x.exportToFileSystemAsJson());'",
