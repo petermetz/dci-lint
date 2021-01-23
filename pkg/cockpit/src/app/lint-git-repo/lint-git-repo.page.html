@@ -1,0 +1,63 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Git Repo Linting</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Linter Configuration</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-item>
+      <ion-icon name="pin" slot="start"></ion-icon>
+      <ion-input [(ngModel)]="gitCloneUrl" value="https://github.com/hyperledger/cactus.git"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="alert-circle" slot="start"></ion-icon>
+      <ion-input [(ngModel)]="targetPhrasePatternsCsv"></ion-input>
+    </ion-item>
+
+    <ion-card-content>
+      <ion-text>
+        You can lint any clonable git repository on the internet.
+        Just enter it's URL and the target phrases you want to lint for.
+      </ion-text>
+    </ion-card-content>
+
+    <ion-item>
+      <ion-button slot="end" color="primary" (click)="onBtnClickLint()">Lint it!</ion-button>
+    </ion-item>
+  </ion-card>
+
+  <ion-card *ngIf="lintGitRepoResponse">
+    <ion-card-header>
+      <ion-card-title>Git Clone URL</ion-card-title>
+      <ion-card-subtitle>{{gitCloneUrl}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-item>
+      <ion-label>Lint Operation Outcome</ion-label>
+      <ion-label>{{lintGitRepoResponse.outcome}}</ion-label>
+    </ion-item>
+
+    <ion-item-divider color="primary">
+      <ion-label>Linter Errors ({{ lintGitRepoResponse.linterErrors.length }})</ion-label>
+    </ion-item-divider>
+
+
+    <ion-item-group *ngFor="let aLinterError of lintGitRepoResponse.linterErrors">
+      <ion-item-divider color="danger">
+          <ion-label>{{aLinterError.file}} ({{ aLinterError.targetPhrasePatterns }})</ion-label>
+      </ion-item-divider>
+    </ion-item-group>
+  </ion-card>
+
+</ion-content>

@@ -4,8 +4,15 @@ import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "/",
+    redirectTo: "git-repo-linter",
     pathMatch: "full",
+  },
+  {
+    path: "git-repo-linter",
+    loadChildren: () =>
+      import("./lint-git-repo/lint-git-repo.module").then(
+        (m) => m.LintGitRepoPageModule
+      ),
   },
 ];
 

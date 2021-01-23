@@ -1,7 +1,6 @@
 import "@angular/compiler";
-import { NgModule, APP_INITIALIZER, InjectionToken } from "@angular/core";
+import { NgModule } from "@angular/core";
 
-import { HttpClientModule } from "@angular/common/http";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouteReuseStrategy } from "@angular/router";
 
@@ -13,6 +12,8 @@ import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { Logger, LoggerProvider } from "@dci-lint/common";
 import { API_URL } from "src/constants";
+import { LintGitRepoPageRoutingModule } from "./lint-git-repo/lint-git-repo-routing.module";
+import { LintGitRepoPage } from "./lint-git-repo/lint-git-repo.page";
 
 LoggerProvider.setLogLevel("TRACE");
 
@@ -25,7 +26,12 @@ log.debug("API_URL=%o", ApiUrl);
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    LintGitRepoPageRoutingModule,
+  ],
   providers: [
     StatusBar,
     SplashScreen,
