@@ -105,10 +105,10 @@ export class LintGitRepoService {
         outcome: LintGitRepoResponseOutcomeEnum.SUCCESS,
       };
 
-      this.log.debug("Linting Github Organization OK");
+      this.log.debug("Linting git repository OK");
       return res;
     } catch (ex) {
-      this.log.error("Linting Github Organization Failed: ", ex);
+      this.log.error("Linting git repository Failed: ", ex);
       throw ex;
     }
   }
