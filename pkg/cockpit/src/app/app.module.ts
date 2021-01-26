@@ -8,12 +8,12 @@ import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 
+import { Logger, LoggerProvider } from "@dci-lint/common";
+
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from "./app-routing.module";
-import { Logger, LoggerProvider } from "@dci-lint/common";
-import { API_URL } from "src/constants";
+import { API_URL } from "../constants";
 import { LintGitRepoPageRoutingModule } from "./lint-git-repo/lint-git-repo-routing.module";
-import { LintGitRepoPage } from "./lint-git-repo/lint-git-repo.page";
 
 LoggerProvider.setLogLevel("TRACE");
 
