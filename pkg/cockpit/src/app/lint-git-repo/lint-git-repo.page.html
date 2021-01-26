@@ -22,7 +22,9 @@
 
     <ion-item>
       <ion-icon name="alert-circle" slot="start"></ion-icon>
-      <ion-input [(ngModel)]="targetPhrasePatternsCsv"></ion-input>
+      <ion-input [(ngModel)]="targetPhrasePatternsCsv" aria-placeholder="Comma separated target phrase patterns"
+        placeholder="Comma separated target phrase patterns">
+      </ion-input>
     </ion-item>
 
     <ion-card-content>
@@ -55,7 +57,7 @@
 
     <ion-item-group *ngFor="let aLinterError of lintGitRepoResponse.linterErrors">
       <ion-item-divider color="danger">
-          <ion-label>{{aLinterError.file}} ({{ aLinterError.targetPhrasePatterns }})</ion-label>
+        <ion-label>{{aLinterError.file}} ({{ aLinterError.targetPhrasePatterns }})</ion-label>
       </ion-item-divider>
     </ion-item-group>
   </ion-card>
