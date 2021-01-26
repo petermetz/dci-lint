@@ -7,6 +7,7 @@ import {
   Configuration,
   LintGitRepoResponse,
 } from "@dci-lint/core-api";
+import { LoadingController } from "@ionic/angular";
 
 import { API_URL } from "src/constants";
 
@@ -24,7 +25,10 @@ export class LintGitRepoPage implements OnInit {
   public targetPhrasePatternsCsv: string;
   public lintGitRepoResponse: LintGitRepoResponse;
 
-  constructor(@Inject(API_URL) public readonly apiUrl: string) {
+  constructor(
+    @Inject(API_URL) public readonly apiUrl: string,
+    public readonly loadingController: LoadingController
+  ) {
     const loggerOpts: ILoggerOptions = {
       label: "lint-git-repo-page",
       level: "TRACE",
@@ -46,20 +50,35 @@ export class LintGitRepoPage implements OnInit {
 
   public async onBtnClickLint(): Promise<void> {
     this.log.debug(`onBtnClickLint() gitCloneUrl=${this.gitCloneUrl}`);
-    const config = new Configuration({ basePath: this.apiUrl });
-    const api = new DciLintApi(config);
 
-    this.log.info(`targetPhrasePatternsCsv=${this.targetPhrasePatternsCsv}`);
-
-    this.targetPhrasePatterns = this.targetPhrasePatternsCsv.split(",");
-
-    const { data, status } = await api.lintGitRepoV1({
-      cloneUrl: this.gitCloneUrl,
-      targetPhrasePatterns: this.targetPhrasePatterns,
+    const loading = await this.loadingController.create({
+      message: "Please wait...",
     });
-    this.log.debug(`LintGitRepo Status: ${status}`);
+    await loading.present();
 
-    this.log.debug(`LintGitRepo Data: ${JSON.stringify(data, null, 4)}`);
-    this.lintGitRepoResponse = data;
+    try {
+      const config = new Configuration({ basePath: this.apiUrl });
+      const api = new DciLintApi(config);
+
+      this.log.info(`targetPhrasePatternsCsv=${this.targetPhrasePatternsCsv}`);
+
+      this.targetPhrasePatterns = this.targetPhrasePatternsCsv.split(",");
+
+      const { data, status } = await api.lintGitRepoV1({
+        cloneUrl: this.gitCloneUrl,
+        targetPhrasePatterns: this.targetPhrasePatterns,
+      });
+      this.log.debug(`LintGitRepo Status: ${status}`);
+
+      this.log.debug(`LintGitRepo Data: ${JSON.stringify(data, null, 4)}`);
+      this.lintGitRepoResponse = data;
+
+      loading.dismiss();
+      await loading.onDidDismiss();
+      this.log.debug(`LintGitRepo loading spinner dismissed.`);
+    } catch (ex) {
+      this.log.error(`LintGitRepo linting failed:`, ex);
+      throw ex;
+    }
   }
 }
