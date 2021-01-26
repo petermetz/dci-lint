@@ -14,27 +14,34 @@ import {
   LintGitRepoResponse,
   LintGitRepoResponseOutcomeEnum,
 } from "@dci-lint/core-api";
+import { IgnoreFileParser } from "./ignore-file-parser";
 
 export interface ILintGitRepoServiceOptions {
   logLevel?: LogLevelDesc;
+  ignoreFileParser?: IgnoreFileParser;
 }
 
 export class LintGitRepoService {
   public static readonly CLASS_NAME = "LintGitRepoService";
 
   private readonly log: Logger;
+  private readonly ignoreFileParser: IgnoreFileParser;
 
   public get className() {
     return LintGitRepoService.CLASS_NAME;
   }
 
-  constructor(public readonly options: ILintGitRepoServiceOptions) {
+  constructor(public readonly opts: ILintGitRepoServiceOptions) {
     const fnTag = `${this.className}#constructor()`;
-    Checks.truthy(options, `${fnTag} arg options`);
+    Checks.truthy(opts, `${fnTag} arg options`);
 
-    const level = this.options.logLevel || "INFO";
+    const level = this.opts.logLevel || "INFO";
     const label = this.className;
     this.log = LoggerProvider.getOrCreate({ level, label });
+
+    this.ignoreFileParser =
+      opts.ignoreFileParser || new IgnoreFileParser({ logLevel: level });
+    Checks.truthy(this.ignoreFileParser, `${fnTag}:this.ignoreFileParser`);
   }
 
   public async run(req: LintGitRepoRequest): Promise<LintGitRepoResponse> {
@@ -57,16 +64,25 @@ export class LintGitRepoService {
       const cloneResult = await git.clone(req.cloneUrl, localRepoDirName);
       this.log.debug(`CloneResult=%o`, cloneResult);
 
-      const dciLintIgnoreFilePath = path.join(workspace, ".dcilintignore");
-      const ignoreFileExists = await fs.pathExists(dciLintIgnoreFilePath);
-      this.log.debug(`Ignore file exists=%o`, ignoreFileExists);
-
       // If not overridden by the request, then we search all files.
       const includePatterns = req.includeFilePatterns || ["**"];
 
       // By default we exclude the .git/ directory because it contains a bunch
       // of binary files for the most part.
       const excludePatterns = req.excludeFilePatterns || [".git"];
+
+      const dciLintIgnoreFilePath = path.join(gitRootDir, ".dcilintignore");
+      const ignoreFileExists = await fs.pathExists(dciLintIgnoreFilePath);
+      if (ignoreFileExists) {
+        this.log.debug(`Ignore file exists. Parsing it...`);
+        const ignoreGlobPatterns = await this.ignoreFileParser.parse({
+          path: dciLintIgnoreFilePath,
+        });
+        this.log.debug(`Ignore file parsed into: %o`, ignoreGlobPatterns);
+        ignoreGlobPatterns.forEach((ptrn) => excludePatterns.push(ptrn));
+      } else {
+        this.log.debug(`No ignore file exists. Skipping parsing...`);
+      }
 
       this.log.debug(`Effective include patterns: %o`, includePatterns);
       this.log.debug(`Effective exclude patterns: %o`, excludePatterns);

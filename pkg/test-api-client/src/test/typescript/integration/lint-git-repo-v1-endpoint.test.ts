@@ -12,8 +12,7 @@ import { LintGitRepoService, registerWebServiceEndpoint } from "@dci-lint/core";
 
 const logLevel: LogLevelDesc = "TRACE";
 
-test("Lint a git repo", async (t: Test) => {
-
+test.skip("Lint a git repo", async (t: Test) => {
   const webApp = express();
   webApp.use(bodyParser.json({ limit: "25mb" }));
   const server = http.createServer(webApp);
@@ -27,7 +26,7 @@ test("Lint a git repo", async (t: Test) => {
 
   const endpoint = new LintGitRepoV1Endpoint({
     logLevel,
-    svc: new LintGitRepoService({ logLevel, }),
+    svc: new LintGitRepoService({ logLevel }),
   });
   registerWebServiceEndpoint(webApp, endpoint);
 
@@ -48,7 +47,8 @@ test("Lint a git repo", async (t: Test) => {
 
   const res2 = await apiClient.lintGitRepoV1({
     cloneUrl,
-    targetPhrasePatterns: [ // these phrases are present in the repo README
+    targetPhrasePatterns: [
+      // these phrases are present in the repo README
       "clanking",
       "pointy",
       "selected",
@@ -61,5 +61,42 @@ test("Lint a git repo", async (t: Test) => {
   t.ok(res2, "Response truthy OK");
   t.equal(res2.status, 200, "Response status equals 200 OK");
   t.notEqual(res2.data.linterErrors.length, 0, "Linter errors found OK");
+});
 
+test("respects the .dcilintignore configuration", async (t: Test) => {
+  const webApp = express();
+  webApp.use(bodyParser.json({ limit: "25mb" }));
+  const server = http.createServer(webApp);
+  const listenOptions: IListenOptions = {
+    hostname: "localhost",
+    port: 0,
+    server,
+  };
+  const addressInfo = (await Servers.listen(listenOptions)) as AddressInfo;
+  test.onFinish(async () => await Servers.shutdown(server));
+
+  const endpoint = new LintGitRepoV1Endpoint({
+    logLevel,
+    svc: new LintGitRepoService({ logLevel }),
+  });
+  registerWebServiceEndpoint(webApp, endpoint);
+
+  const { address, port } = addressInfo;
+  const apiHost = `http://${address}:${port}`;
+  const apiClient = new DciLintApi({ basePath: apiHost });
+
+  const cloneUrl = "https://github.com/petermetz/random-english-words.git";
+
+  const res1 = await apiClient.lintGitRepoV1({
+    cloneUrl,
+    // These are phrases that are present in the license file, meaning that
+    // unless our test is successful these should be marked as errors.
+    // The ignore file of our target repo however does specify the license
+    // file to be ignored so we'll assert that there were no errors for a pass.
+    targetPhrasePatterns: ["NONINFRINGEMENT", "MERCHANTABILITY"],
+  });
+
+  t.ok(res1, "Response truthy OK");
+  t.equal(res1.status, 200, "Response status equals 200 OK");
+  t.equal(res1.data.linterErrors.length, 0, "No linter errors found OK");
 });
