@@ -2,14 +2,14 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
+        <h1>DCI Lint</h1>
+        <h2>Diversity, Civility, Inclusion Lint</h2>
         <ion-list id="inbox-list">
-          <ion-list-header>DCI Lint</ion-list-header>
-          <ion-note>Cockpit</ion-note>
-
+          <h3>Menu</h3>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item (click)="selectedIndex = i" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" [class.selected]="selectedIndex == i">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+              <ion-label color="dark" [attr.aria-label]="p.title">{{ p.title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>

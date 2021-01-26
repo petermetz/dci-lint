@@ -17,13 +17,15 @@
   <ion-card>
     <ion-item>
       <ion-icon name="pin" slot="start"></ion-icon>
+      <ion-label>Git Clone URL</ion-label>
       <ion-input [(ngModel)]="gitCloneUrl" value="https://github.com/hyperledger/cactus.git"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-icon name="alert-circle" slot="start"></ion-icon>
-      <ion-input [(ngModel)]="targetPhrasePatternsCsv" aria-placeholder="Comma separated target phrase patterns"
-        placeholder="Comma separated target phrase patterns">
+      <ion-label>Target phrase patterns CSV</ion-label>
+      <ion-input [(ngModel)]="targetPhrasePatternsCsv"
+        placeholder="some/**/glob/pattern,other-glob-*-pattern.txt,some-file-name">
       </ion-input>
     </ion-item>
 
