@@ -1,2 +1,4 @@
 # TSLint configuration parameter
 pkg/cockpit/tslint.json
+
+.github/workflows/dci-lint.yaml
