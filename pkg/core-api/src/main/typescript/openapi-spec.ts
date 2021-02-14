@@ -90,7 +90,6 @@ export const OPEN_API_JSON: OpenAPIV3.Document = {
             maxItems: 100,
             items: {
               $ref: "#/components/schemas/GlobPattern",
-              nullable: false,
             },
           },
           excludeFilePatterns: {
@@ -100,7 +99,6 @@ export const OPEN_API_JSON: OpenAPIV3.Document = {
             maxItems: 100,
             items: {
               $ref: "#/components/schemas/GlobPattern",
-              nullable: false,
             },
           },
         },

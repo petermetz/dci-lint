@@ -95,8 +95,7 @@
                         "minItems": 1,
                         "maxItems": 100,
                         "items": {
-                            "$ref": "#/components/schemas/GlobPattern",
-                            "nullable": false
+                            "$ref": "#/components/schemas/GlobPattern"
                         }
                     },
                     "excludeFilePatterns": {
@@ -105,8 +104,7 @@
                         "minItems": 1,
                         "maxItems": 100,
                         "items": {
-                            "$ref": "#/components/schemas/GlobPattern",
-                            "nullable": false
+                            "$ref": "#/components/schemas/GlobPattern"
                         }
                     }
                 }
