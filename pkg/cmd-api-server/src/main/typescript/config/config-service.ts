@@ -390,7 +390,7 @@ export class ConfigService {
         label: "config-service",
         level,
       });
-      logger.info("Configuration validation OK.");
+      logger.debug("Configuration validation OK.");
     }
     return ConfigService.config;
   }
