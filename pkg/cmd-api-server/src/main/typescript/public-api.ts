@@ -1,6 +1,7 @@
 export { ApiServer, IApiServerConstructorOptions } from "./api-server";
 
-export { launchApp } from "./cmd/dci-lint-server";
+export { launchApiServerApp } from "./cmd/dci-lint-server";
+export { launchCliApp } from "./cmd/dci-lint-cli";
 
 export {
   ConfigService,

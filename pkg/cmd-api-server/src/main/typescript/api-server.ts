@@ -279,6 +279,15 @@ export class ApiServer {
     return addressInfo;
   }
 
+  public async getLocalApiBasePath(): Promise<string> {
+    const httpServer = this.getHttpServerApi();
+    const addressInfo = httpServer.address() as AddressInfo;
+    const { port } = addressInfo;
+
+    const protocol = this.options.config.apiTlsEnabled ? "https" : "http";
+    return `${protocol}://127.0.0.1:${port}`;
+  }
+
   createOpenApiValidator(): OpenApiValidator {
     return new OpenApiValidator({
       apiSpec: {
