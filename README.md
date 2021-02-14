@@ -52,15 +52,28 @@ otherwise it's `2`, indicating an issue.
 
 To avoid the response being pretty-printed JSON, you can pass in the `--prety=false` flag via the CLI in addition to the `--request='{...}'` parameter. This will cause the JSON output to be printed on a single line.
 
-## Documentation
+## Run locally via Docker
+
+```sh
+docker \
+  run \
+  --rm \
+  petermetz/dci-lint:2021-02-14-97931a1 \
+  node \
+  ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js \
+  lint-git-repo \
+  --request='{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": ["something-mean"]}'
+```
+
+# Documentation
 
 Is scarce.
 
-## Contributing
+# Contributing
 
 Open an issue before working on a pull request to ensure proper alignment.
 
-## License
+# License
 
 Dual licensed under `Apahce-2.0` and `MIT` (pick the one you like)
 
