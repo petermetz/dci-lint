@@ -1,8 +1,8 @@
 {
   "name": "@dci-lint/monorepo",
-  "private": false,
   "scripts": {
-    "configure": "npm ci && lerna clean --yes && lerna bootstrap && npm-run-all build:dev:backend generate-api-server-config",
+    "configure": "yarn install --frozen-lockfile && yarn run build:dev:backend",
+    "install-yarn": "npm install -g yarn@1.19.0",
     "generate-api-server-config": "node ./tools/generate-api-server-config.js",
     "start": "node ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js",
     "start:api-server": "node ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js --config-file=.config.json",
@@ -10,7 +10,8 @@
     "export-open-api-spec": "ts-node -e 'import(\"./pkg/cmd-api-server/src/main/typescript/openapi-spec\").then((x) => x.exportToFileSystemAsJson());'",
     "pregenerate-sdk": "npm-run-all export-open-api-spec",
     "generate-sdk": "openapi-generator generate --input-spec openapi-spec.json -g typescript-axios -o pkg/api-client/src/main/typescript/generated/openapi/typescript-axios/",
-    "clean": "lerna exec --stream --ignore '*/*cockpit' -- del-cli dist/** && del-cli pkg/api-client/src/main/typescript/generated/openapi/typescript-axios/*",
+    "purge-build-cache": "del-cli .build-cache/*",
+    "clean": "npm run purge-build-cache && del-cli \"./{packages}/*/{dist,.nyc_output,src/main/proto/generated/*,src/main/typescript/generated/proto/protoc-gen-ts/*,src/main/typescript/generated/openapi/typescript-axios/*}\"",
     "lint": "lerna exec --stream --ignore '*/*cockpit' -- cross-env DEBUG= tslint --project tsconfig.json",
     "tsc": "lerna run tsc",
     "build": "npm-run-all build:dev build:prod",
@@ -54,7 +55,7 @@
     "commitizen": "4.2.2",
     "cross-env": "5.2.0",
     "crypto-browserify": "3.12.0",
-    "del-cli": "3.0.1",
+    "del-cli": "4.0.1",
     "electron": "9.4.0",
     "eslint-config-standard": "12.0.0",
     "eslint-plugin-import": "2.17.3",
@@ -101,6 +102,5 @@
   },
   "lint-staged": {
     "./**/*.{ts,js}": "prettier --write --config .prettierrc.json"
-  },
-  "dependencies": {}
+  }
 }
