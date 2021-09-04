@@ -1,11 +1,31 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/lib/", /* Redirect output structure to the directory. */
-    "declarationDir": "dist/types",
+    "outDir": "./dist/lib/",
+    "declarationDir": "dist/lib",
     "resolveJsonModule": true,
+    "rootDir": "./src",
+    "tsBuildInfoFile": "../../.build-cache/test-cmd-api-server.tsbuildinfo",
+    "composite": true
   },
   "include": [
     "./src"
+  ],
+  "references": [
+    {
+      "path": "../api-client/tsconfig.json"
+    },
+    {
+      "path": "../cmd-api-server/tsconfig.json"
+    },
+    {
+      "path": "../common/tsconfig.json"
+    },
+    {
+      "path": "../core/tsconfig.json"
+    },
+    {
+      "path": "../core-api/tsconfig.json"
+    }
   ]
 }

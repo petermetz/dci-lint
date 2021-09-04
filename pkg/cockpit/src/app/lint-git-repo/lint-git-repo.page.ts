@@ -9,7 +9,7 @@ import {
 } from "@dci-lint/core-api";
 import { LoadingController } from "@ionic/angular";
 
-import { API_URL } from "src/constants";
+import { API_URL } from "../../constants";
 
 @Component({
   selector: "app-lint-git-repo",
@@ -23,7 +23,7 @@ export class LintGitRepoPage implements OnInit {
   public gitCloneUrl: string;
   public targetPhrasePatterns: string[];
   public targetPhrasePatternsCsv: string;
-  public lintGitRepoResponse: LintGitRepoResponse;
+  public lintGitRepoResponse: LintGitRepoResponse | null;
 
   constructor(
     @Inject(API_URL) public readonly apiUrl: string,
@@ -38,6 +38,9 @@ export class LintGitRepoPage implements OnInit {
     this.log.debug(`constructor() applying default API host: ${apiUrl}`);
     this.apiHost = apiUrl;
     this.gitCloneUrl = "https://github.com/hyperledger/cactus.git";
+    this.lintGitRepoResponse = null;
+    this.targetPhrasePatternsCsv = "";
+    this.targetPhrasePatterns = [];
   }
 
   public ngOnInit(): void {

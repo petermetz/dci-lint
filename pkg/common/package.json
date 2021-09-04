@@ -32,8 +32,7 @@
     "type": "git",
     "url": "git+https://github.com/petermetz/dci-lint.git"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "contributors": [
     {
       "name": "Please add yourself to the list of contributors",

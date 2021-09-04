@@ -6,7 +6,7 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 
 import { LoggerProvider, Logger } from "@dci-lint/common";
 import { DefaultApi as DciLintApi, Configuration } from "@dci-lint/core-api";
-import { API_URL } from "src/constants";
+import { API_URL } from "../constants";
 
 @Component({
   selector: "app-root",

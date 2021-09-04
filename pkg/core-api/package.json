@@ -52,8 +52,7 @@
   },
   "homepage": "https://github.com/petermetz/dci-lint#readme",
   "devDependencies": {
-    "@types/express": "4.17.8",
-    "@types/express-serve-static-core": "4.17.17",
+    "@types/express": "4.17.13",
     "@types/joi": "14.3.4"
   },
   "dependencies": {

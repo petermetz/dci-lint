@@ -1,10 +1,14 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/lib/", /* Redirect output structure to the directory. */
-    "declarationDir": "dist/types",
+    "outDir": "./dist/lib/",
+    "declarationDir": "dist/lib",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "../../.build-cache/core-api.tsbuildinfo",
+    "composite": true
   },
   "include": [
     "./src"
-  ]
+  ],
+  "references": []
 }
