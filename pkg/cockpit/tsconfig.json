@@ -21,7 +21,6 @@
     ],
     "rootDir": "./src",
     "tsBuildInfoFile": "../../.build-cache/cockpit.tsbuildinfo",
-    "declarationDir": "dist/lib",
     "composite": true
   },
   "exclude": [
