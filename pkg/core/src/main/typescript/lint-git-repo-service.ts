@@ -118,7 +118,7 @@ export class LintGitRepoService {
       const res: LintGitRepoResponse = {
         linterErrors,
         cloneUrl: req.cloneUrl,
-        outcome: LintGitRepoResponseOutcomeEnum.SUCCESS,
+        outcome: LintGitRepoResponseOutcomeEnum.Success,
       };
 
       this.log.debug("Linting git repository OK");

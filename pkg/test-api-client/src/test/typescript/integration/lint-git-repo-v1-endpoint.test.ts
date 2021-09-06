@@ -5,7 +5,7 @@ import test, { Test } from "tape-promise/tape";
 import express from "express";
 import bodyParser from "body-parser";
 
-import { DefaultApi as DciLintApi } from "@dci-lint/core-api";
+import { Configuration, DefaultApi as DciLintApi } from "@dci-lint/core-api";
 import { LintGitRepoV1Endpoint } from "@dci-lint/cmd-api-server";
 import { IListenOptions, LogLevelDesc, Servers } from "@dci-lint/common";
 import { LintGitRepoService, registerWebServiceEndpoint } from "@dci-lint/core";
@@ -32,7 +32,8 @@ test.skip("Lint a git repo", async (t: Test) => {
 
   const { address, port } = addressInfo;
   const apiHost = `http://${address}:${port}`;
-  const apiClient = new DciLintApi({ basePath: apiHost });
+  const configuration = new Configuration({ basePath: apiHost });
+  const apiClient = new DciLintApi(configuration);
 
   const cloneUrl = "https://github.com/petermetz/random-english-words.git";
 
@@ -83,7 +84,8 @@ test("respects the .dcilintignore configuration", async (t: Test) => {
 
   const { address, port } = addressInfo;
   const apiHost = `http://${address}:${port}`;
-  const apiClient = new DciLintApi({ basePath: apiHost });
+  const configuration = new Configuration({ basePath: apiHost });
+  const apiClient = new DciLintApi(configuration);
 
   const cloneUrl = "https://github.com/petermetz/random-english-words.git";
 

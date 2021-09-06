@@ -17,6 +17,8 @@ import { Configuration } from './configuration';
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+// @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 /**
@@ -97,30 +99,24 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         apiV1ApiServerHealthcheckGet: async (options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/api-server/healthcheck`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
+
             const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
 
     
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -132,6 +128,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
  * @export
  */
 export const DefaultApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
     return {
         /**
          * Returns the current timestamp of the API server as proof of health/liveness
@@ -140,11 +137,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async apiV1ApiServerHealthcheckGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthCheckResponse>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).apiV1ApiServerHealthcheckGet(options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ApiServerHealthcheckGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
@@ -154,6 +148,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
  * @export
  */
 export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DefaultApiFp(configuration)
     return {
         /**
          * Returns the current timestamp of the API server as proof of health/liveness
@@ -162,7 +157,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         apiV1ApiServerHealthcheckGet(options?: any): AxiosPromise<HealthCheckResponse> {
-            return DefaultApiFp(configuration).apiV1ApiServerHealthcheckGet(options).then((request) => request(axios, basePath));
+            return localVarFp.apiV1ApiServerHealthcheckGet(options).then((request) => request(axios, basePath));
         },
     };
 };

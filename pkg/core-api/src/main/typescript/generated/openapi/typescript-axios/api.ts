@@ -17,6 +17,8 @@ import { Configuration } from './configuration';
 import globalAxios, { AxiosPromise, AxiosInstance } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
+import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from './common';
+// @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base';
 
 /**
@@ -81,9 +83,9 @@ export interface LintGitRepoResponse {
     * @enum {string}
     */
 export enum LintGitRepoResponseOutcomeEnum {
-    SUCCESS = 'dci-lint.lint-git-repo-response.outcome.SUCCESS',
-    INCONCLUSIVE = 'dci-lint.lint-git-repo-response.outcome.INCONCLUSIVE',
-    FAILURE = 'dci-lint.lint-git-repo-response.outcome.FAILURE'
+    Success = 'dci-lint.lint-git-repo-response.outcome.SUCCESS',
+    Inconclusive = 'dci-lint.lint-git-repo-response.outcome.INCONCLUSIVE',
+    Failure = 'dci-lint.lint-git-repo-response.outcome.FAILURE'
 }
 
 /**
@@ -124,9 +126,9 @@ export interface LintGithubOrgResponse {
     * @enum {string}
     */
 export enum LintGithubOrgResponseOutcomeEnum {
-    SUCCESS = 'dci-lint.lint-github-org-response.outcome.SUCCESS',
-    INCONCLUSIVE = 'dci-lint.lint-github-org-response.outcome.INCONCLUSIVE',
-    FAILURE = 'dci-lint.lint-github-org-response.outcome.FAILURE'
+    Success = 'dci-lint.lint-github-org-response.outcome.SUCCESS',
+    Inconclusive = 'dci-lint.lint-github-org-response.outcome.INCONCLUSIVE',
+    Failure = 'dci-lint.lint-github-org-response.outcome.FAILURE'
 }
 
 /**
@@ -165,11 +167,12 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         lintGitRepoV1: async (lintGitRepoRequest?: LintGitRepoRequest, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/lint-git-repo`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
+
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
@@ -178,21 +181,13 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof lintGitRepoRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(lintGitRepoRequest !== undefined ? lintGitRepoRequest : {}) : (lintGitRepoRequest || "");
+            localVarRequestOptions.data = serializeDataIfNeeded(lintGitRepoRequest, localVarRequestOptions, configuration)
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -206,11 +201,12 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         lintGithubOrgV1: async (lintGithubOrgRequest?: LintGithubOrgRequest, options: any = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/lint-github-org`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
+
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
@@ -219,21 +215,13 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
 
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.query) {
-                query.set(key, options.query[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+            setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            const needsSerialization = (typeof lintGithubOrgRequest !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data =  needsSerialization ? JSON.stringify(lintGithubOrgRequest !== undefined ? lintGithubOrgRequest : {}) : (lintGithubOrgRequest || "");
+            localVarRequestOptions.data = serializeDataIfNeeded(lintGithubOrgRequest, localVarRequestOptions, configuration)
 
             return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                url: toPathString(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
@@ -245,6 +233,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
  * @export
  */
 export const DefaultApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -254,11 +243,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async lintGitRepoV1(lintGitRepoRequest?: LintGitRepoRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LintGitRepoResponse>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).lintGitRepoV1(lintGitRepoRequest, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.lintGitRepoV1(lintGitRepoRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
@@ -268,11 +254,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @throws {RequiredError}
          */
         async lintGithubOrgV1(lintGithubOrgRequest?: LintGithubOrgRequest, options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LintGithubOrgResponse>> {
-            const localVarAxiosArgs = await DefaultApiAxiosParamCreator(configuration).lintGithubOrgV1(lintGithubOrgRequest, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
-                return axios.request(axiosRequestArgs);
-            };
+            const localVarAxiosArgs = await localVarAxiosParamCreator.lintGithubOrgV1(lintGithubOrgRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
 };
@@ -282,6 +265,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
  * @export
  */
 export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = DefaultApiFp(configuration)
     return {
         /**
          * 
@@ -291,7 +275,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         lintGitRepoV1(lintGitRepoRequest?: LintGitRepoRequest, options?: any): AxiosPromise<LintGitRepoResponse> {
-            return DefaultApiFp(configuration).lintGitRepoV1(lintGitRepoRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.lintGitRepoV1(lintGitRepoRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -301,7 +285,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         lintGithubOrgV1(lintGithubOrgRequest?: LintGithubOrgRequest, options?: any): AxiosPromise<LintGithubOrgResponse> {
-            return DefaultApiFp(configuration).lintGithubOrgV1(lintGithubOrgRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.lintGithubOrgV1(lintGithubOrgRequest, options).then((request) => request(axios, basePath));
         },
     };
 };

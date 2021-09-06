@@ -4,6 +4,7 @@ import { Argv } from "yargs";
 
 import { Logger, LoggerProvider } from "@dci-lint/common";
 import {
+  Configuration,
   DefaultApi as CoreApi,
   LintGitRepoRequest,
   LintGitRepoResponse,
@@ -22,7 +23,8 @@ const main = async (req: LintGitRepoRequest): Promise<LintGitRepoResponse> => {
     throw new Error(`DCI Lint API server failed to start for unknown reason.`);
   }
   const basePath = await apiServer.get().getLocalApiBasePath();
-  const apiClient = new CoreApi({ basePath });
+  const configuration = new Configuration({ basePath });
+  const apiClient = new CoreApi(configuration);
 
   const res = await apiClient.lintGitRepoV1(req);
   const { data, status, statusText } = res;

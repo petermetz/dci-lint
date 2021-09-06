@@ -13,7 +13,7 @@ import express, {
   RequestHandler,
   Application,
 } from "express";
-import { OpenApiValidator } from "express-openapi-validator";
+import * as OpenApiValidator from "express-openapi-validator";
 import compression from "compression";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -25,6 +25,7 @@ import { OPEN_API_JSON as OAS_CORE_API } from "@dci-lint/core-api";
 import { OPEN_API_JSON as OAS_API_SERVER } from "./openapi-spec";
 import { IApiServerOptions } from "./config/config-service";
 import { LintGitRepoV1Endpoint } from "./lint-git-repo/lint-git-repo-v1-endpoint";
+import { OpenApiRequestHandler } from "express-openapi-validator/dist/framework/types";
 
 export interface IApiServerConstructorOptions {
   httpServerApi?: Server | SecureServer;
@@ -234,8 +235,8 @@ export class ApiServer {
 
     app.use(bodyParser.json({ limit: "50mb" }));
 
-    const openApiValidator = this.createOpenApiValidator();
-    await openApiValidator.install(app);
+    const openApiValidatorMiddleware = this.createOpenApiValidator();
+    app.use(openApiValidatorMiddleware);
 
     const healthcheckHandler = (req: Request, res: Response) => {
       res.json({
@@ -288,8 +289,8 @@ export class ApiServer {
     return `${protocol}://127.0.0.1:${port}`;
   }
 
-  createOpenApiValidator(): OpenApiValidator {
-    return new OpenApiValidator({
+  createOpenApiValidator(): OpenApiRequestHandler[] {
+    return OpenApiValidator.middleware({
       apiSpec: {
         ...OAS_API_SERVER,
         ...OAS_CORE_API,

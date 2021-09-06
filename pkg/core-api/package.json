@@ -7,16 +7,15 @@
   "browser": "dist/core-api.web.umd.js",
   "browserMinified": "dist/core-api.web.umd.min.js",
   "module": "dist/lib/main/typescript/index.js",
-  "types": "dist/types/main/typescript/index.d.ts",
+  "types": "dist/lib/main/typescript/index.d.ts",
   "files": [
     "dist/*"
   ],
   "scripts": {
-    "export-open-api-spec": "ts-node src/main/typescript/openapi-spec.ts",
-    "pregenerate-sdk": "npm-run-all export-open-api-spec",
-    "generate-sdk": "openapi-generator generate --input-spec src/main/json/generated/openapi-spec.json -g typescript-axios -o ./src/main/typescript/generated/openapi/typescript-axios/",
-    "pretsc": "npm run generate-sdk",
-    "tsc": "tsc --project ./tsconfig.json",
+    "generate-sdk": "openapi-generator-cli generate -i ./src/main/json/openapi.json -g typescript-axios -o ./src/main/typescript/generated/openapi/typescript-axios/ --reserved-words-mappings protected=protected",
+    "codegen:openapi": "npm run generate-sdk",
+    "codegen": "run-p 'codegen:*'",
+    "watch": "npm-watch",
     "webpack": "npm-run-all webpack:dev webpack:prod",
     "webpack:dev": "npm-run-all webpack:dev:node webpack:dev:web",
     "webpack:dev:web": "webpack --env=dev --target=web --config ../../webpack.config.js",
@@ -24,6 +23,13 @@
     "webpack:prod": "npm-run-all webpack:prod:node webpack:prod:web",
     "webpack:prod:web": "webpack --env=prod --target=web --config ../../webpack.config.js",
     "webpack:prod:node": "webpack --env=prod --target=node --config ../../webpack.config.js"
+  },
+  "watch": {
+    "codegen:openapi": {
+      "patterns": [
+        "./src/main/json/openapi.json"
+      ]
+    }
   },
   "engines": {
     "node": ">=10",
@@ -53,7 +59,8 @@
   "homepage": "https://github.com/petermetz/dci-lint#readme",
   "devDependencies": {
     "@types/express": "4.17.13",
-    "@types/joi": "14.3.4"
+    "@types/joi": "14.3.4",
+    "npm-run-all": "4.1.5"
   },
   "dependencies": {
     "axios": "0.21.1",

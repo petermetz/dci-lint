@@ -3,7 +3,7 @@ import http from "http";
 
 import test, { Test } from "tape-promise/tape";
 
-import { DefaultApi as DciLintApi } from "@dci-lint/core-api";
+import { Configuration, DefaultApi as DciLintApi } from "@dci-lint/core-api";
 import { ApiServer, ConfigService } from "@dci-lint/cmd-api-server";
 import { IListenOptions, LogLevelDesc, Servers } from "@dci-lint/common";
 
@@ -39,7 +39,8 @@ test("Lint a git repo", async (t: Test) => {
 
   const { address, port } = addressInfo;
   const apiHost = `http://${address}:${port}`;
-  const apiClient = new DciLintApi({ basePath: apiHost });
+  const configuration = new Configuration({ basePath: apiHost });
+  const apiClient = new DciLintApi(configuration);
 
   const cloneUrl = "https://github.com/petermetz/random-english-words.git";
 
