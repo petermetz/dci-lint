@@ -7,8 +7,8 @@ jobs:
     steps:
     - name: Lint Git Repo
       id: lint-git-repo
-      uses: petermetz/gh-action-dci-lint@v0.0.3
+      uses: petermetz/gh-action-dci-lint@v0.1.0
       with:
-        lint-git-repo-request: '{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": ["master", "slave", "blacklist", "whitelist"]}'
+        lint-git-repo-request: '{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": [], "configDefaultsUrl": "https://inclusivenaming.org/json/dci-lint-config-recommended-v1.json" }'
     - name: Get the output response
       run: echo "${{ steps.lint-git-repo.outputs.lint-git-repo-response }}"
