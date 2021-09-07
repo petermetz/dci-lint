@@ -2,9 +2,6 @@
   "files": [],
   "references": [
     {
-      "path": "./pkg/api-client/tsconfig.json"
-    },
-    {
       "path": "./pkg/cmd-api-server/tsconfig.json"
     },
     {

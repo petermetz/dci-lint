@@ -12,7 +12,6 @@
     "dist/*"
   ],
   "scripts": {
-    "tsc": "tsc --project ./tsconfig.json",
     "webpack": "npm-run-all webpack:dev webpack:prod",
     "webpack:dev": "npm-run-all webpack:dev:node webpack:dev:web",
     "webpack:dev:web": "webpack --env=dev --target=web --config ../../webpack.config.js",
@@ -51,7 +50,6 @@
   },
   "homepage": "https://github.com/petermetz/dci-lint#readme",
   "dependencies": {
-    "@dci-lint/api-client": "^0.2.0",
     "@dci-lint/cmd-api-server": "^0.2.0",
     "@dci-lint/common": "^0.2.0",
     "@dci-lint/core": "^0.2.0",

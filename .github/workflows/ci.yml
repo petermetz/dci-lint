@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: CI
 
 on: [pull_request, push]
 
@@ -9,18 +9,18 @@ jobs:
     continue-on-error: ${{ matrix.experimental }}
 
     strategy:
-      fail-fast: true
+      fail-fast: false
       max-parallel: 16
       matrix:
-        os: [ubuntu-20.04, ubuntu-18.04]
-        node-version: [v12.13.0, v14.15.1]
+        os: [ubuntu-20.04]
+        node-version: [v12.22.6, v14.17.6, v16.8.0]
         experimental: [false]
 
     steps:
-    - name: Set up JDK 8 (OpenAPI generator needs it)
+    - name: Set up JDK 11 (OpenAPI generator needs it)
       uses: actions/setup-java@v1.4.3
       with:
-        java-version: '8.0.275' # The JDK version to make available on the path.
+        java-version: '11' # The JDK version to make available on the path.
         java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
         architecture: x64 # (x64 or x86) - defaults to x64
 
@@ -31,8 +31,6 @@ jobs:
 
     - uses: actions/checkout@v2.3.4
 
-    - run: npm ci
-    - run: ./node_modules/.bin/lerna clean --yes
-    - run: ./node_modules/.bin/lerna bootstrap
-    - run: npm run build:dev
-    - run: npm run test:unit -- --bail
+    - run: yarn install --frozen-lockfile --immutable
+    - run: yarn build
+    - run: yarn test:all --bail

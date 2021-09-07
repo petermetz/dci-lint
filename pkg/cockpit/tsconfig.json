@@ -2,6 +2,8 @@
   "files": [],
   "compileOnSave": false,
   "compilerOptions": {
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "baseUrl": "./",
     "outDir": "./dist/lib/",
     "sourceMap": true,
@@ -32,9 +34,6 @@
     "strictInjectionParameters": true
   },
   "references": [
-    {
-      "path": "../api-client/tsconfig.json"
-    },
     {
       "path": "../common/tsconfig.json"
     },

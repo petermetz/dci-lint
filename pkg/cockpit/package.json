@@ -23,7 +23,6 @@
     "@angular/platform-browser-dynamic": "12.2.4",
     "@angular/router": "12.2.4",
     "@capacitor/core": "1.5.1",
-    "@dci-lint/api-client": "^0.2.0",
     "@dci-lint/common": "^0.2.0",
     "@dci-lint/core-api": "^0.2.0",
     "@ionic-native/core": "5.0.0",

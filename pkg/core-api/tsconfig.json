@@ -1,14 +1,15 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "composite": true,
     "outDir": "./dist/lib/",
     "declarationDir": "dist/lib",
     "rootDir": "./src",
     "tsBuildInfoFile": "../../.build-cache/core-api.tsbuildinfo",
-    "composite": true
   },
   "include": [
-    "./src"
+    "./src",
+    "./src/**/*.json"
   ],
   "references": []
 }

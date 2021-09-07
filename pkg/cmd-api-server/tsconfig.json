@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist/lib/",
     "declarationDir": "dist/lib",
@@ -8,12 +8,10 @@
     "composite": true
   },
   "include": [
-    "./src"
+    "src",
+    "src/**/*.json",
   ],
   "references": [
-    {
-      "path": "../api-client/tsconfig.json"
-    },
     {
       "path": "../cockpit/tsconfig.json"
     },

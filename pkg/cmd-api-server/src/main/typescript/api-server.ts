@@ -22,7 +22,8 @@ import { Logger, LoggerProvider, Servers } from "@dci-lint/common";
 import { LintGitRepoService } from "@dci-lint/core";
 import { OPEN_API_JSON as OAS_CORE_API } from "@dci-lint/core-api";
 
-import { OPEN_API_JSON as OAS_API_SERVER } from "./openapi-spec";
+import OAS_API_SERVER from "../../main/json/openapi.json";
+
 import { IApiServerOptions } from "./config/config-service";
 import { LintGitRepoV1Endpoint } from "./lint-git-repo/lint-git-repo-v1-endpoint";
 import { OpenApiRequestHandler } from "express-openapi-validator/dist/framework/types";

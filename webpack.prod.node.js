@@ -25,11 +25,10 @@ module.exports = {
         test: /\.ts$/,
         exclude: /node_modules/,
         use: [
-          "cache-loader",
           {
             loader: "ts-loader",
             options: {
-              transpileOnly: false,
+              transpileOnly: true,
               configFile: "tsconfig.json",
             },
           },
@@ -39,7 +38,6 @@ module.exports = {
         test: /\.(js|ts)$/,
         enforce: "pre",
         use: [
-          "cache-loader",
           {
             loader: "source-map-loader",
           },
@@ -68,10 +66,5 @@ module.exports = {
     umdNamedDefine: true,
     globalObject: "this",
   },
-  externals: {
-    "swarm-js": "swarm-js",
-    "node-ssh": "node-ssh",
-    "fabric-client": "fabric-client",
-    "fabric-ca-client": "fabric-ca-client",
-  },
+  externals: {},
 };

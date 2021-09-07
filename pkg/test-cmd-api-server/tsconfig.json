@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist/lib/",
     "declarationDir": "dist/lib",
@@ -12,9 +12,6 @@
     "./src"
   ],
   "references": [
-    {
-      "path": "../api-client/tsconfig.json"
-    },
     {
       "path": "../cmd-api-server/tsconfig.json"
     },
