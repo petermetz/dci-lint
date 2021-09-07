@@ -1,62 +1,48 @@
-FROM node:14.15.4-buster as builder
+FROM ubuntu:20.04
 
-RUN apt-get update
-RUN apt -y install software-properties-common
-RUN apt-add-repository 'deb http://security.debian.org/debian-security stretch/updates main'
-RUN apt-get update
-RUN apt-get install -y openjdk-8-jdk
-
-RUN npm install modclean -g
-
-WORKDIR /
-RUN mkdir /app/
-WORKDIR /app/
-COPY ./ ./
-RUN npm ci
-RUN ./node_modules/.bin/lerna clean --yes
-RUN ./node_modules/.bin/lerna bootstrap
-RUN npm run build:dev
-RUN ./node_modules/.bin/lerna clean --yes
-RUN ./node_modules/.bin/lerna bootstrap -- --production --no-optional
-
-RUN modclean --run --patterns="default:*" --path ./pkg/api-client/
-RUN modclean --run --patterns="default:*" --path ./pkg/cmd-api-server/
-RUN modclean --run --patterns="default:*" --path ./pkg/cockpit/
-RUN modclean --run --patterns="default:*" --path ./pkg/common/
-RUN modclean --run --patterns="default:*" --path ./pkg/core/
-RUN modclean --run --patterns="default:*" --path ./pkg/core-api/
-
-RUN rm -rf ./pkg/test-api-client
-RUN rm -rf ./pkg/test-cmd-api-server
-RUN rm -rf ./node_modules/
-
-FROM node:14.15.4-buster-slim
-
-RUN apt-get update
-RUN apt-get install -y ca-certificates tzdata curl tini git
-RUN rm -rf /var/lib/apt/lists/*
+SHELL ["/bin/bash", "-c"]
 
 ARG APP=/usr/src/app/
+ENV APP_USER=appuser
 
-ENV TZ=Etc/UTC \
-    APP_USER=appuser
+# GUI: 3000, API: 4000
+EXPOSE 3000 4000
 
-RUN groupadd $APP_USER \
-    && useradd -g $APP_USER $APP_USER \
-    && mkdir -p ${APP}
+RUN groupadd --gid 1000 appuser \
+  && useradd --uid 1000 --gid appuser --shell /bin/bash --create-home ${APP_USER}
 
-COPY --chown=$APP_USER:$APP_USER --from=builder /app/ ${APP}
+RUN apt update && apt install -y curl git
 
-USER $APP_USER
+RUN mkdir -p "${APP}log/"
+RUN chown -R $APP_USER:$APP_USER "${APP}log/"
+
 WORKDIR ${APP}
 
-# Web GUI + Reverse proxy for API
-EXPOSE 3000
+COPY --chown=${APP_USER}:${APP_USER} ./pkg/cmd-api-server/docker-entrypoint.sh /usr/local/bin/
+COPY --chown=${APP_USER}:${APP_USER} ./pkg/cmd-api-server/healthcheck.sh /
+RUN chown -R $APP_USER:$APP_USER ${APP}
 
-# API
-EXPOSE 4000
+USER $APP_USER
+ARG NPM_PKG_VERSION=latest
 
-COPY --chown=${APP_USER}:${APP_USER} ./healthcheck.sh /
+ENV TZ=Etc/UTC
+ENV NODE_ENV=production
+
+ENV NVM_DIR /home/${APP_USER}/.nvm
+ENV NODE_VERSION 16.8.0
+ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
+ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+# Install nvm with node and npm
+RUN mkdir -p ${NVM_DIR}
+RUN curl https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash \
+  && source $NVM_DIR/nvm.sh \
+  && nvm install $NODE_VERSION \
+  && nvm alias default $NODE_VERSION \
+  && nvm use default \
+  && npm install -g npm@7.19.1
+
+RUN npm install @dci-lint/cmd-api-server@${NPM_PKG_VERSION} --production
 
 ENV COCKPIT_TLS_ENABLED=false
 ENV COCKPIT_CORS_DOMAIN_CSV=\*
@@ -66,6 +52,7 @@ ENV API_TLS_ENABLED=false
 ENV COCKPIT_TLS_CERT_PEM=-
 ENV COCKPIT_TLS_KEY_PEM=-
 ENV COCKPIT_TLS_CLIENT_CA_PEM=-
+ENV COCKPIT_WWW_ROOT=/usr/src/app/node_modules/@dci-lint/cockpit/www/
 ENV API_TLS_CERT_PEM=-
 ENV API_TLS_CLIENT_CA_PEM=-
 ENV API_TLS_KEY_PEM=-
@@ -75,9 +62,6 @@ ENV API_PORT=4000
 ENV PORT=3000
 ENV LOG_LEVEL=INFO
 
-ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["npm", "start"]
-
-HEALTHCHECK --interval=1s --timeout=5s --start-period=1s --retries=30 \
-    CMD /healthcheck.sh
-
+HEALTHCHECK --interval=1s --timeout=5s --start-period=1s --retries=60 CMD /healthcheck.sh
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["node_modules/@dci-lint/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js"]

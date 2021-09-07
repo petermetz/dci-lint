@@ -52,6 +52,12 @@ otherwise it's `2`, indicating an issue.
 
 To avoid the response being pretty-printed JSON, you can pass in the `--prety=false` flag via the CLI in addition to the `--request='{...}'` parameter. This will cause the JSON output to be printed on a single line.
 
+## Build container image locally
+
+```sh
+DOCKER_BUILDKIT=1 docker build -f ./Dockerfile . -t dcil
+```
+
 ## Run locally via Docker
 
 ```sh

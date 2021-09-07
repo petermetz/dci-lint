@@ -12,8 +12,7 @@
     "build:prod:frontend": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "prepublishOnly": "ng build --prod"
+    "e2e": "ng e2e"
   },
   "dependencies": {
     "@angular/common": "12.2.4",

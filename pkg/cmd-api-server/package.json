@@ -3,7 +3,7 @@
   "version": "0.3.0",
   "description": "API server that combines and exposes all the functionality of a DCI Lint deployment through a unified REST API interface.",
   "bin": {
-    "dci-lint": "./dist/lib/main/typescript/cmd/dci-lint.js"
+    "dci-lint": "./dist/lib/main/typescript/cmd/dci-lint-server.js"
   },
   "files": [
     "dist/*"
