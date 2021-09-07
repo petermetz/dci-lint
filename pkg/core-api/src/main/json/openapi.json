@@ -83,6 +83,12 @@
                         "maxLength": 1024,
                         "nullable": false
                     },
+                    "configDefaultsUrl": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 65535,
+                        "nullable": false
+                    },
                     "targetPhrasePatterns": {
                         "type": "array",
                         "items": {

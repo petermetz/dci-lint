@@ -35,6 +35,12 @@ export interface LintGitRepoRequest {
     cloneUrl: string;
     /**
      * 
+     * @type {string}
+     * @memberof LintGitRepoRequest
+     */
+    configDefaultsUrl?: string;
+    /**
+     * 
      * @type {Array<string>}
      * @memberof LintGitRepoRequest
      */

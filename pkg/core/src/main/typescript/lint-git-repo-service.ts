@@ -1,6 +1,7 @@
-import path, { resolve } from "path";
-// import { promises as fs } from "fs";
+import path from "path";
 
+import { RuntimeError } from "run-time-error";
+import axios, { AxiosError } from "axios";
 import fs from "fs-extra";
 import fg from "fast-glob";
 import { v4 as uuidv4 } from "uuid";
@@ -14,6 +15,9 @@ import {
   LintGitRepoResponse,
   LintGitRepoResponseOutcomeEnum,
 } from "@dci-lint/core-api";
+
+import { isAxiosError } from "@dci-lint/core-api";
+
 import { IgnoreFileParser } from "./ignore-file-parser";
 
 export interface ILintGitRepoServiceOptions {
@@ -59,6 +63,36 @@ export class LintGitRepoService {
         maxConcurrentProcesses: 1,
       };
 
+      let defaultTargetPhrasePatterns: string[] = [];
+      if (req.configDefaultsUrl) {
+        const url = req.configDefaultsUrl;
+        try {
+          const { data, status } = await axios.get<LintGitRepoRequest>(url);
+          this.log.debug(`Received config defaults from URL: ${url}`);
+          this.log.debug(`Config defaults status: %o, data: %o`, status, data);
+          defaultTargetPhrasePatterns = data.targetPhrasePatterns;
+        } catch (ex) {
+          if (isAxiosError(ex)) {
+            throw new RuntimeError(`Fail: HTTP GET config URL: ${url}`, ex);
+          } else if (ex instanceof Error) {
+            throw new RuntimeError("Fail: Invocation of Axios HTTP GET", ex);
+          } else {
+            throw new RuntimeError(
+              "Fail: Invocation of Axios HTTP GET",
+              JSON.stringify(ex)
+            );
+          }
+        }
+      }
+      const effectiveTargetPhrasePatterns = defaultTargetPhrasePatterns
+        ? req.targetPhrasePatterns.concat(defaultTargetPhrasePatterns)
+        : req.targetPhrasePatterns;
+
+      this.log.debug(
+        "Effective Target Phrase Patterns: %o",
+        effectiveTargetPhrasePatterns
+      );
+
       // Create a dummy git repository locally that we'll clone in the lint git repo svc
       const git: SimpleGit = simpleGit(options);
       const cloneResult = await git.clone(req.cloneUrl, localRepoDirName);
@@ -99,7 +133,7 @@ export class LintGitRepoService {
 
         const entryPath = path.join(gitRootDir, entry as string);
         const contents = await fs.readFile(entryPath, "utf-8");
-        const hits = req.targetPhrasePatterns
+        const hits = effectiveTargetPhrasePatterns
           .map((p: string) => contents.match(p))
           .filter((m: RegExpMatchArray | null) => m != null)
           .map(
