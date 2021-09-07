@@ -20,9 +20,6 @@
     "webpack:prod:web": "webpack --env=prod --target=web --config ../../webpack.config.js",
     "webpack:prod:node": "webpack --env=prod --target=node --config ../../webpack.config.js"
   },
-  "publishConfig": {
-    "access": "public"
-  },
   "engines": {
     "node": ">=10",
     "npm": ">=6"
@@ -44,16 +41,19 @@
       "url": "https://accenture.com"
     }
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "LICENSE": "Apache-2.0 OR MIT",
   "bugs": {
     "url": "https://github.com/petermetz/dci-lint/issues"
   },
   "homepage": "https://github.com/petermetz/dci-lint#readme",
   "dependencies": {
-    "@dci-lint/cmd-api-server": "^0.2.0",
-    "@dci-lint/common": "^0.2.0",
-    "@dci-lint/core": "^0.2.0",
-    "@dci-lint/core-api": "^0.2.0",
+    "@dci-lint/cmd-api-server": "0.2.0",
+    "@dci-lint/common": "0.2.0",
+    "@dci-lint/core": "0.2.0",
+    "@dci-lint/core-api": "0.2.0",
     "axios": "0.21.1",
     "body-parser": "1.19.0",
     "express": "4.17.1",
