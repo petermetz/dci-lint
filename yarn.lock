@@ -1971,7 +1971,7 @@ __metadata:
     express-http-proxy: 1.6.0
     express-openapi-validator: 4.13.0
     joi: 14.3.1
-    jose: 1.27.2
+    jose: 3.16.1
     js-sha3: 0.8.0
     node-fetch: 3.0.0-beta.9
     node-forge: 0.10.0
@@ -3501,13 +3501,6 @@ __metadata:
   bin:
     openapi-generator-cli: main.js
   checksum: 5169e198434cb07fcc0c3e80b9f2f4ccdb242f4046d09c0b8f060cb5acea3f796563ddb626e73263a75a10a5535e06f1482c1af794aa7a4c8b9d9d3b9b410398
-  languageName: node
-  linkType: hard
-
-"@panva/asn1.js@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@panva/asn1.js@npm:1.0.0"
-  checksum: cb6bcc1918a7f08e81e7d7f5bde83c20a66b30248ddc3ef10b1612e0e0b9f722c2b07ca6b586a089a49c1b6cfb29d63fdd23d4bc00c8cc40538b5595bec66d7d
   languageName: node
   linkType: hard
 
@@ -12212,12 +12205,10 @@ fsevents@~2.3.2:
   languageName: node
   linkType: hard
 
-"jose@npm:1.27.2":
-  version: 1.27.2
-  resolution: "jose@npm:1.27.2"
-  dependencies:
-    "@panva/asn1.js": ^1.0.0
-  checksum: b58d4c8696c0eb1ec06d93f74f4e3f30cd32d89222160357aab0f4f3c4cabec93f410bdbaa7eb562ef4b97734b0f95b0d7d706037007d002edd94f6c9c3ceb48
+"jose@npm:3.16.1":
+  version: 3.16.1
+  resolution: "jose@npm:3.16.1"
+  checksum: fd8c7f1d1003ee80cc1bb97d12e8fbe478daece2cb9dce60984656c1036f58d83a7642d4fb006b730bfd8801da6d19d10b90747256d3500e7392853fad3037b8
   languageName: node
   linkType: hard
 
