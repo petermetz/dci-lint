@@ -2,3 +2,5 @@
 pkg/cockpit/tslint.json
 
 .github/workflows/dci-lint.yaml
+
+.yarn/**
