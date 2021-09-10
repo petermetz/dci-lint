@@ -8,6 +8,7 @@
     "install-yarn": "npm install -g yarn@1.19.0",
     "generate-api-server-config": "node ./tools/generate-api-server-config.js",
     "start": "node ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js",
+    "start:cli": "node ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js",
     "start:api-server": "node ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js --config-file=.config.json",
     "start:cockpit": "lerna run --scope '*/cockpit' --stream serve:proxy",
     "purge-build-cache": "del-cli .build-cache/*",

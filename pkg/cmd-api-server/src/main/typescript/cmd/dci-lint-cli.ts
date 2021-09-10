@@ -14,7 +14,7 @@ import { launchApiServerApp } from "./dci-lint-server";
 
 const log: Logger = LoggerProvider.getOrCreate({
   label: "api",
-  level: "ERROR",
+  level: "TRACE",
 });
 
 const main = async (req: LintGitRepoRequest): Promise<LintGitRepoResponse> => {

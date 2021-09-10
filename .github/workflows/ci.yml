@@ -3,6 +3,18 @@ name: CI
 on: [pull_request, push]
 
 jobs:
+  dci_lint_job:
+    runs-on: ubuntu-20.04
+    name: DCI-Lint
+    steps:
+    - name: Lint Git Repo
+      id: lint-git-repo
+      uses: petermetz/gh-action-dci-lint@v0.1.3
+      with:
+        lint-git-repo-request: '{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": [], "configDefaultsUrl": "https://inclusivenaming.org/json/dci-lint-config-recommended-v1.json" }'
+    - name: Get the output response
+      run: echo "${{ steps.lint-git-repo.outputs.lint-git-repo-response }}"
+
   build:
 
     runs-on: ${{ matrix.os }}
