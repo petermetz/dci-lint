@@ -11,6 +11,7 @@ import {
 } from "@dci-lint/core-api";
 
 import { launchApiServerApp } from "./dci-lint-server";
+import { RuntimeError } from "run-time-error";
 
 const log: Logger = LoggerProvider.getOrCreate({
   label: "api",
@@ -55,7 +56,15 @@ export async function launchCliApp(): Promise<void> {
       },
       async (args: any) => {
         log.info(`Parsing request JSON: ${args.request}`);
-        const req = JSON.parse(args.request) as LintGitRepoRequest;
+        let req: LintGitRepoRequest;
+        try {
+          req = JSON.parse(args.request) as LintGitRepoRequest;
+        } catch (ex) {
+          throw new RuntimeError(
+            `Failed to parse JSON request from CLI: ${args.request}`,
+            ex
+          );
+        }
         const res = await main(req);
         if (args.pretty) {
           // tslint:disable-next-line: no-console
