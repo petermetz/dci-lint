@@ -9,7 +9,7 @@ jobs:
     steps:
     - name: Lint Git Repo
       id: lint-git-repo
-      uses: petermetz/gh-action-dci-lint@v0.4.3
+      uses: petermetz/gh-action-dci-lint@v0.4.4
       with:
         lint-git-repo-request: '{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": [], "configDefaultsUrl": "https://inclusivenaming.org/json/dci-lint-config-recommended-v1.json" }'
     - name: Get the output response
