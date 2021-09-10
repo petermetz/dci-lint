@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/petermetz/dci-lint/compare/v0.3.0...v0.4.0) (2021-09-10)
+
+
+### Bug Fixes
+
+* github action container image ([f2635fc](https://github.com/petermetz/dci-lint/commit/f2635fc8fd14c44230df09d66b9078d28c656fcb))
+* yarn lock file for the build ([608f1d1](https://github.com/petermetz/dci-lint/commit/608f1d1760c79390c21e18f422ca8d6b7178b4bb))
+
+
+
+
+
 # 0.3.0 (2021-09-07)
 
 

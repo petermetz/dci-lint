@@ -1,6 +1,6 @@
 {
   "name": "@dci-lint/test-api-client",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Integration tests for the DCI Lint API Client package (formerly known as the  SDK package that has been renamed for to purpose of being less ambiguous)",
   "main": "dist/lib/main/typescript/index.js",
   "mainMinified": "dist/test-api-client.node.umd.min.js",
@@ -50,10 +50,10 @@
   },
   "homepage": "https://github.com/petermetz/dci-lint#readme",
   "dependencies": {
-    "@dci-lint/cmd-api-server": "0.3.0",
-    "@dci-lint/common": "0.3.0",
-    "@dci-lint/core": "0.3.0",
-    "@dci-lint/core-api": "0.3.0",
+    "@dci-lint/cmd-api-server": "0.4.0",
+    "@dci-lint/common": "0.4.0",
+    "@dci-lint/core": "0.4.0",
+    "@dci-lint/core-api": "0.4.0",
     "axios": "0.21.1",
     "body-parser": "1.19.0",
     "express": "4.17.1",

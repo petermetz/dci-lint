@@ -1,6 +1,6 @@
 {
   "name": "@dci-lint/core",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Contains lower level abstractions/implementation that is to be shared by multiple other, higher level packages of the project.",
   "main": "dist/lib/main/typescript/index.js",
   "mainMinified": "dist/core.node.umd.min.js",
@@ -50,8 +50,8 @@
   },
   "homepage": "https://github.com/petermetz/dci-lint#readme",
   "dependencies": {
-    "@dci-lint/common": "0.3.0",
-    "@dci-lint/core-api": "0.3.0",
+    "@dci-lint/common": "0.4.0",
+    "@dci-lint/core-api": "0.4.0",
     "axios": "0.21.4",
     "fast-glob": "3.2.4",
     "fs-extra": "9.0.1",
