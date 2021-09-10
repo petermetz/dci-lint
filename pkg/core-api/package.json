@@ -66,7 +66,7 @@
     "npm-run-all": "4.1.5"
   },
   "dependencies": {
-    "axios": "0.21.1",
+    "axios": "0.21.4",
     "joi": "14.3.1",
     "openapi-types": "7.0.1",
     "typescript-optional": "2.0.1"
