@@ -101,6 +101,9 @@ export class LintGitRepoService {
       const cwdRes = await git.cwd(gitRootDir);
       this.log.debug("SimpleGit CWD Out=%o", cwdRes);
 
+      const pullAllRes = await git.raw(["pull", "--all"]);
+      this.log.debug("git pull --all => %o", pullAllRes);
+
       const checkoutArgs = req.checkoutArgs || [];
       this.log.debug("Effective checkoutArgs=%o", checkoutArgs);
       if (checkoutArgs.length > 0) {
