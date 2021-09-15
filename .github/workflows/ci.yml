@@ -11,7 +11,7 @@ jobs:
       id: lint-git-repo
       uses: petermetz/gh-action-dci-lint@v0.4.5
       with:
-        lint-git-repo-request: '{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": [], "configDefaultsUrl": "https://inclusivenaming.org/json/dci-lint-config-recommended-v1.json" }'
+        lint-git-repo-request: '{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "": ["${{ env.GITHUB_REF }}"], "targetPhrasePatterns": [], "configDefaultsUrl": "https://inclusivenaming.org/json/dci-lint-config-recommended-v1.json" }'
     - name: Get the output response
       run: echo "${{ steps.lint-git-repo.outputs.lint-git-repo-response }}"
 
