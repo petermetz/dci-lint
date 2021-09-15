@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/petermetz/dci-lint/compare/v0.4.0...v0.5.0) (2021-09-15)
+
+
+### Features
+
+* **cmd-api-server:** git checkout args now configurable via request ([58f67ae](https://github.com/petermetz/dci-lint/commit/58f67aecd011a116f39150c526bf446ee6fc12c9))
+
+
+
+
+
 # [0.4.0](https://github.com/petermetz/dci-lint/compare/v0.3.0...v0.4.0) (2021-09-10)
 
 **Note:** Version bump only for package @dci-lint/core

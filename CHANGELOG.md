@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/petermetz/dci-lint/compare/v0.4.0...v0.5.0) (2021-09-15)
+
+
+### Bug Fixes
+
+* **api-server:** remove redundant generated files ([0ece773](https://github.com/petermetz/dci-lint/commit/0ece7733f1d7a4d3f43e02eb0d9197450ce0cf85))
+* **linter:** ignore the .yarn folder which has dependencies in it ([ca3509a](https://github.com/petermetz/dci-lint/commit/ca3509ad91225dc5c2bcf676ff839bdce84204ad))
+* stop using deprecated --frozen-lockfile yarn argument ([efe3fc3](https://github.com/petermetz/dci-lint/commit/efe3fc34e05dc827b86ad71dc9739be9033bcfdf))
+* **yarn-lock:** updated the lock file ([843aa13](https://github.com/petermetz/dci-lint/commit/843aa13b452532511655fe474c41f8af2392d625))
+
+
+### Features
+
+* **cmd-api-server:** git checkout args now configurable via request ([58f67ae](https://github.com/petermetz/dci-lint/commit/58f67aecd011a116f39150c526bf446ee6fc12c9))
+
+
+
+
+
 # [0.4.0](https://github.com/petermetz/dci-lint/compare/v0.3.0...v0.4.0) (2021-09-10)
 
 
