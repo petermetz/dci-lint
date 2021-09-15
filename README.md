@@ -79,6 +79,12 @@ Is scarce.
 
 Open an issue before working on a pull request to ensure proper alignment.
 
+# Development
+
+Make sure to install `nodemon` globally if you'll be using the `yarn watch` script
+for automatic builds on source code changes.
+You can find more information about why this is needed in the [npm-watch](https://github.com/M-Zuber/npm-watch#common-issues) package's documentation.
+
 # License
 
 Dual licensed under `Apahce-2.0` and `MIT` (pick the one you like)
