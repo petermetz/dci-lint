@@ -1,6 +1,6 @@
 {
   "name": "@dci-lint/core",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Contains lower level abstractions/implementation that is to be shared by multiple other, higher level packages of the project.",
   "main": "dist/lib/main/typescript/index.js",
   "mainMinified": "dist/core.node.umd.min.js",
