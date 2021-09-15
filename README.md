@@ -15,8 +15,23 @@ You can self host DCI-lint by running the container image as shown below,
 after which you can access the GUI locally at http:/localhost:3000
 
 ```sh
-docker run --rm -e PORT=3000 -p 3000:3000 petermetz/dci-lint:2021-01-29-9eaf276
+docker run --rm -e PORT=3000 -p 3000:3000 ghcr.io/petermetz/dci-lint:0.5.1
 ```
+
+If you'd rather use the command line interface instead of the web interface,
+you can do so via the container as well:
+
+```sh
+docker \
+  run \
+  --rm \
+  --env DCI_LINT_LOG_LEVEL=DEBUG \
+  ghcr.io/petermetz/dci-lint:0.5.1 \
+  node_modules/@dci-lint/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js \
+  lint-git-repo \
+  --request='{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": ["something-mean"]}'
+```
+
 
 ## Command Line Interface
 
@@ -63,7 +78,7 @@ DOCKER_BUILDKIT=1 docker build --build-arg NPM_PKG_VERSION=latest -f ./Dockerfil
 docker \
   run \
   --rm \
-  ghcr.io/petermetz/dci-lint:0.5.0 \
+  dcil \
   node_modules/@dci-lint/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js \
   lint-git-repo \
   --request='{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": ["something-mean"]}'
