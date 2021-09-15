@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.6.0](https://github.com/petermetz/dci-lint/compare/v0.5.1...v0.6.0) (2021-09-15)
+
+
+### Bug Fixes
+
+* **core:** lint git repo service now does git pull --all ([a803ae6](https://github.com/petermetz/dci-lint/commit/a803ae6008a14dee4d7c7dde534531401bcc6e01))
+
+
+
+
+
 ## [0.5.1](https://github.com/petermetz/dci-lint/compare/v0.5.0...v0.5.1) (2021-09-15)
 
 
