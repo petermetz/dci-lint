@@ -55,7 +55,7 @@ To avoid the response being pretty-printed JSON, you can pass in the `--prety=fa
 ## Build container image locally
 
 ```sh
-DOCKER_BUILDKIT=1 docker build -f ./Dockerfile . -t dcil
+DOCKER_BUILDKIT=1 docker build --build-arg NPM_PKG_VERSION=latest -f ./Dockerfile . -t dcil
 ```
 
 ## Run locally via Docker
@@ -64,9 +64,8 @@ DOCKER_BUILDKIT=1 docker build -f ./Dockerfile . -t dcil
 docker \
   run \
   --rm \
-  petermetz/dci-lint:2021-02-14-97931a1 \
-  node \
-  ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js \
+  ghcr.io/petermetz/dci-lint:0.5.0 \
+  node_modules/@dci-lint/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js \
   lint-git-repo \
   --request='{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": ["something-mean"]}'
 ```

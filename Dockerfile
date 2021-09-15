@@ -23,7 +23,6 @@ COPY --chown=${APP_USER}:${APP_USER} ./pkg/cmd-api-server/healthcheck.sh /
 RUN chown -R $APP_USER:$APP_USER ${APP}
 
 USER $APP_USER
-ARG NPM_PKG_VERSION=latest
 
 ENV TZ=Etc/UTC
 ENV NODE_ENV=production
@@ -42,6 +41,7 @@ RUN curl https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash 
   && nvm use default \
   && npm install -g npm@7.19.1
 
+ARG NPM_PKG_VERSION=latest
 RUN npm install @dci-lint/cmd-api-server@${NPM_PKG_VERSION} --production
 
 ENV COCKPIT_TLS_ENABLED=false
