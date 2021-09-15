@@ -23,10 +23,9 @@ docker run --rm -e PORT=3000 -p 3000:3000 petermetz/dci-lint:2021-01-29-9eaf276
 After the project has been built, the CLI can be invoked as follows:
 
 ```sh
-node \
-  ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js \
-  lint-git-repo \
-  --request='{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": ["something-mean"]}'
+DCI_LINT_LOG_LEVEL=ERROR node \
+  node_modules/@dci-lint/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js   \
+  lint-git-repo   --request='{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": ["something-mean"], "checkoutArgs": ["v0.5.0"]}'
 ```
 
 Running the command above will produce something like this printed to the standard out of your terminal:

@@ -12,6 +12,7 @@ import {
 
 import { launchApiServerApp } from "./dci-lint-server";
 import { RuntimeError } from "run-time-error";
+import { LintGitRepoService } from "@dci-lint/core";
 
 const log: Logger = LoggerProvider.getOrCreate({
   label: "api",
@@ -42,6 +43,12 @@ export async function launchCliApp(): Promise<void> {
       "Lints a git repository.",
       (yargs: Argv) => {
         yargs
+          .option("log-level", {
+            describe:
+              "The log level to set for the underlying service instance.",
+            requiresArg: false,
+            type: "string",
+          })
           .option("request", {
             describe:
               "The JSON string representing the request object as defined in the OpenAPI specifications of the LintGitRepo endpoint.",
@@ -52,7 +59,8 @@ export async function launchCliApp(): Promise<void> {
             alias: "P",
             default: true,
             type: "boolean",
-          });
+          })
+          .env("DCI_LINT");
       },
       async (args: any) => {
         log.info(`Parsing request JSON: ${args.request}`);
@@ -65,7 +73,10 @@ export async function launchCliApp(): Promise<void> {
             ex
           );
         }
-        const res = await main(req);
+        const svc = new LintGitRepoService({
+          logLevel: args.logLevel || "ERROR",
+        });
+        const res = await svc.run(req);
         if (args.pretty) {
           // tslint:disable-next-line: no-console
           console.log(JSON.stringify(res, null, 4));

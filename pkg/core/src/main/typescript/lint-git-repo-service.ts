@@ -56,6 +56,7 @@ export class LintGitRepoService {
 
     const workspace = temp.mkdirSync(uuidv4());
     const gitRootDir = path.join(workspace, localRepoDirName);
+    this.log.debug("Git root dir=%o", gitRootDir);
     try {
       const options: SimpleGitOptions = {
         baseDir: workspace,
@@ -97,6 +98,8 @@ export class LintGitRepoService {
       const git: SimpleGit = simpleGit(options);
       const cloneResult = await git.clone(req.cloneUrl, localRepoDirName);
       this.log.debug(`CloneResult=%o`, cloneResult);
+      const cwdRes = await git.cwd(gitRootDir);
+      this.log.debug("SimpleGit CWD Out=%o", cwdRes);
 
       const checkoutArgs = req.checkoutArgs || [];
       this.log.debug("Effective checkoutArgs=%o", checkoutArgs);
@@ -104,7 +107,7 @@ export class LintGitRepoService {
         this.log.debug("Executing git checkout...");
         // Casting here because the documentation says it's ok to use Arrays,
         // but the typings are written to only accept strings.
-        const out = await git.checkout((checkoutArgs as unknown) as string);
+        const out = await git.checkout(checkoutArgs.join(" "));
         this.log.debug("Checkout Result=%o", out);
       } else {
         this.log.debug("Skipped git checkout due to no args in request.");
