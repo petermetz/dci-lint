@@ -104,8 +104,8 @@ export class LintGitRepoService {
         this.log.debug("Executing git checkout...");
         // Casting here because the documentation says it's ok to use Arrays,
         // but the typings are written to only accept strings.
-        const res = await git.checkout((checkoutArgs as unknown) as string);
-        this.log.debug("Checkout Result=%o", res);
+        const out = await git.checkout((checkoutArgs as unknown) as string);
+        this.log.debug("Checkout Result=%o", out);
       } else {
         this.log.debug("Skipped git checkout due to no args in request.");
       }
