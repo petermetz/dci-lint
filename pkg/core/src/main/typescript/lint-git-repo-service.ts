@@ -98,6 +98,18 @@ export class LintGitRepoService {
       const cloneResult = await git.clone(req.cloneUrl, localRepoDirName);
       this.log.debug(`CloneResult=%o`, cloneResult);
 
+      const checkoutArgs = req.checkoutArgs || [];
+      this.log.debug("Effective checkoutArgs=%o", checkoutArgs);
+      if (checkoutArgs.length > 0) {
+        this.log.debug("Executing git checkout...");
+        // Casting here because the documentation says it's ok to use Arrays,
+        // but the typings are written to only accept strings.
+        const res = await git.checkout((checkoutArgs as unknown) as string);
+        this.log.debug("Checkout Result=%o", res);
+      } else {
+        this.log.debug("Skipped git checkout due to no args in request.");
+      }
+
       // If not overridden by the request, then we search all files.
       const includePatterns = req.includeFilePatterns || ["**"];
 

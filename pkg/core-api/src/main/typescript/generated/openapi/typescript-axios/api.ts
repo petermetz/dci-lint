@@ -34,6 +34,12 @@ export interface LintGitRepoRequest {
      */
     cloneUrl: string;
     /**
+     * CLI arguments passed in to git checkout after a successful clone. If empty or omitted no checkout will be executed after the clone.
+     * @type {Array<string>}
+     * @memberof LintGitRepoRequest
+     */
+    checkoutArgs?: Array<string>;
+    /**
      * 
      * @type {string}
      * @memberof LintGitRepoRequest
