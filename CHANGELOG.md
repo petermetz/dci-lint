@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.1](https://github.com/petermetz/dci-lint/compare/v0.6.0...v0.6.1) (2021-09-16)
+
+
+### Bug Fixes
+
+* **core:** git repo linter now does fetch instead of pull ([d4d8fc2](https://github.com/petermetz/dci-lint/commit/d4d8fc29bcf9cc2a18f76d75e8cfdfd317998b2d))
+
+
+
+
+
 # [0.6.0](https://github.com/petermetz/dci-lint/compare/v0.5.1...v0.6.0) (2021-09-15)
 
 

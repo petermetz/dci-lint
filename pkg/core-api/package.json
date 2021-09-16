@@ -1,6 +1,6 @@
 {
   "name": "@dci-lint/core-api",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Contains type definitions/interfaces for the kernel of the codebase. Kept separate from the implementation so that it is easier to use it as a dependency.",
   "main": "dist/lib/main/typescript/index.js",
   "mainMinified": "dist/core-api.node.umd.min.js",

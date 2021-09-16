@@ -1,6 +1,6 @@
 {
   "name": "@dci-lint/cmd-api-server",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "API server that combines and exposes all the functionality of a DCI Lint deployment through a unified REST API interface.",
   "bin": {
     "dci-lint": "./dist/lib/main/typescript/cmd/dci-lint-server.js"
@@ -64,10 +64,10 @@
   },
   "homepage": "https://github.com/petermetz/dci-lint#readme",
   "dependencies": {
-    "@dci-lint/cockpit": "0.6.0",
+    "@dci-lint/cockpit": "0.6.1",
     "@dci-lint/common": "0.6.0",
-    "@dci-lint/core": "0.6.0",
-    "@dci-lint/core-api": "0.6.0",
+    "@dci-lint/core": "0.6.1",
+    "@dci-lint/core-api": "0.6.1",
     "body-parser": "1.19.0",
     "compression": "1.7.4",
     "convict": "6.0.0",
