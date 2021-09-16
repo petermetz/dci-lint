@@ -83,6 +83,16 @@
                         "maxLength": 1024,
                         "nullable": false
                     },
+                    "fetchArgs": {
+                        "type": "array",
+                        "description": "CLI arguments passed in to git fetch after a successful clone. If empty or omitted no fetch will be executed after the clone.",
+                        "items": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1024,
+                            "nullable": false
+                        }
+                    },
                     "checkoutArgs": {
                         "type": "array",
                         "description": "CLI arguments passed in to git checkout after a successful clone. If empty or omitted no checkout will be executed after the clone.",

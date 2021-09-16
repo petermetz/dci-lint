@@ -101,8 +101,14 @@ export class LintGitRepoService {
       const cwdRes = await git.cwd(gitRootDir);
       this.log.debug("SimpleGit CWD Out=%o", cwdRes);
 
-      const pullAllRes = await git.raw(["pull", "--all"]);
-      this.log.debug("git pull --all => %o", pullAllRes);
+      if (Array.isArray(req.fetchArgs) && req.fetchArgs.length > 0) {
+        const cmd = ["fetch", ...req.fetchArgs];
+        this.log.debug("Executing git fetch with: %o", cmd);
+        const fetchRes = await git.raw(cmd);
+        this.log.debug("Ran git fetch OK Output: %o", fetchRes);
+      } else {
+        this.log.debug("Skipped git fetch due to no fetchArgs request param");
+      }
 
       const checkoutArgs = req.checkoutArgs || [];
       this.log.debug("Effective checkoutArgs=%o", checkoutArgs);
