@@ -5,6 +5,10 @@ Lints your git repositories for inclusive language.
 
 # Usage
 
+## GitHub Action
+
+Follow these instructions to set up a GitHub Action that automatically lints incoming pull requests to your repository: https://github.com/petermetz/gh-action-dci-lint#usage
+
 ## Public test instance
 
 Accessible at: https://dci-lint.herokuapp.com/
