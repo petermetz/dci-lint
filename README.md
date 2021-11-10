@@ -103,3 +103,8 @@ You can find more information about why this is needed in the [npm-watch](https:
 Dual licensed under `Apahce-2.0` and `MIT` (pick the one you like)
 
 See: https://en.wikipedia.org/wiki/Software_Package_Data_Exchange
+
+
+# Publicly available set of recommendations
+
+ https://inclusivenaming.org/configuration-dci-lint-recommended-v1.json
