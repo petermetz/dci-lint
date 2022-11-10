@@ -57,7 +57,7 @@
     "cross-env": "5.2.0",
     "crypto-browserify": "3.12.0",
     "del-cli": "4.0.1",
-    "electron": "9.4.0",
+    "electron": "18.3.7",
     "eslint-config-standard": "12.0.0",
     "eslint-plugin-import": "2.17.3",
     "eslint-plugin-node": "9.1.0",
