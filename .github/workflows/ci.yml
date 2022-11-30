@@ -25,7 +25,7 @@ jobs:
       max-parallel: 16
       matrix:
         os: [ubuntu-20.04]
-        node-version: [v12.22.6, v14.17.6, v16.8.0]
+        node-version: [v14.17.6, v16.8.0]
         experimental: [false]
 
     steps:
