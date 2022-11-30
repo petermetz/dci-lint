@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Argv } from "yargs";
+import safeStringify from "fast-safe-stringify";
 
 import { Logger, LoggerProvider } from "@dci-lint/common";
 import {
@@ -67,10 +68,12 @@ export async function launchCliApp(): Promise<void> {
         let req: LintGitRepoRequest;
         try {
           req = JSON.parse(args.request) as LintGitRepoRequest;
-        } catch (ex) {
+        } catch (ex: unknown) {
+          const innerEx: string | Error =
+            ex instanceof Error ? ex : safeStringify(ex);
           throw new RuntimeError(
             `Failed to parse JSON request from CLI: ${args.request}`,
-            ex
+            innerEx
           );
         }
         const svc = new LintGitRepoService({

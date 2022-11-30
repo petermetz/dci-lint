@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import safeStringify from "fast-safe-stringify";
 import { Express, Request, Response, NextFunction } from "express";
 
 import {
@@ -17,7 +17,6 @@ export interface ILintGitRepoV1EndpointOptions {
 }
 
 export class LintGitRepoV1Endpoint {
-
   public static readonly CLASS_NAME = "LintGitRepoV1Endpoint";
 
   private readonly log: Logger;
@@ -62,10 +61,14 @@ export class LintGitRepoV1Endpoint {
       const resBody = await this.options.svc.run(req.body);
       res.status(200);
       res.json(resBody);
-    } catch (ex) {
+    } catch (ex: unknown) {
       this.log.error(`Failed to serve req ${this.getPath()}`, ex);
       res.status(500);
-      res.json({ error: ex.stack });
+      if (ex instanceof Error) {
+        res.json({ error: ex.stack });
+      } else {
+        res.json({ error: safeStringify(ex) });
+      }
     }
   }
 }

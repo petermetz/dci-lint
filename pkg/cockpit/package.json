@@ -9,7 +9,7 @@
     "serve": "ng serve",
     "serve:proxy": "ng serve -- --proxy-config proxy.conf.json",
     "build:dev:frontend": "ng build",
-    "build:prod:frontend": "ng build --prod",
+    "build:prod:frontend": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

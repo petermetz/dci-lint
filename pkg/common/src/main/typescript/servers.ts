@@ -83,9 +83,9 @@ export class Servers {
     if (preferredPort) {
       try {
         return Servers.startOnPort(preferredPort);
-      } catch (ex) {
+      } catch (ex: unknown) {
         // if something else went wrong we still want to just give up
-        if (!ex.message.includes("EADDRINUSE")) {
+        if (!(ex instanceof Error) || !ex.message.includes("EADDRINUSE")) {
           throw ex;
         }
       }

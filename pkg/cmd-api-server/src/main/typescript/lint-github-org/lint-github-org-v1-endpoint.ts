@@ -1,4 +1,5 @@
 import { Express, Request, Response, NextFunction } from "express";
+import safeStringify from "fast-safe-stringify";
 
 import {
   IWebServiceEndpoint,
@@ -7,16 +8,15 @@ import {
 
 import { Logger, Checks, LogLevelDesc, LoggerProvider } from "@dci-lint/common";
 
-import { registerWebServiceEndpoint, } from "@dci-lint/core";
+import { registerWebServiceEndpoint } from "@dci-lint/core";
 
-import { LintGithubOrgV1Endpoint as Constants, } from "@dci-lint/core-api";
+import { LintGithubOrgV1Endpoint as Constants } from "@dci-lint/core-api";
 
 export interface ILintGithubOrgV1EndpointOptions {
   logLevel?: LogLevelDesc;
 }
 
 export class LintGithubOrgV1Endpoint {
-
   public static readonly CLASS_NAME = "LintGithubOrgV1Endpoint";
 
   private readonly log: Logger;
@@ -31,9 +31,8 @@ export class LintGithubOrgV1Endpoint {
 
     const level = this.options.logLevel || "INFO";
     const label = this.className;
-    this.log = LoggerProvider.getOrCreate({ level, label});
+    this.log = LoggerProvider.getOrCreate({ level, label });
   }
-
 
   public getExpressRequestHandler(): IExpressRequestHandler {
     return this.handleRequest.bind(this);
@@ -60,12 +59,13 @@ export class LintGithubOrgV1Endpoint {
     try {
       this.log.debug(`GET ${this.getPath()}`);
       // const body: LintGithubOrgResponse = { };
-      const body: any = { };
+      const body: any = {};
       res.status(200);
       res.json(body);
-    } catch (ex) {
+    } catch (ex: unknown) {
+      const innerEx = ex instanceof Error ? ex.stack : safeStringify(ex);
       res.status(500);
-      res.json({ error: ex.stack });
+      res.json({ error: innerEx });
     }
   }
 }

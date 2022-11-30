@@ -1,6 +1,7 @@
 import { Express } from "express";
-
+import safeStringify from "fast-safe-stringify";
 import { IWebServiceEndpoint } from "@dci-lint/core-api";
+import { RuntimeError } from "run-time-error";
 
 /**
  * Hooks up an endpoint instance to an ExpressJS web app object.
@@ -20,10 +21,18 @@ export function registerWebServiceEndpoint(
   const registrationMethod = (webApp as any)[httpVerb].bind(webApp);
   try {
     registrationMethod(httpPath, requestHandler);
-  } catch (ex) {
-    throw new Error(
-      `${fnTag} Express verb method ${httpVerb} threw ` +
-        ` while registering endpoint: ${ex.message}`
-    );
+  } catch (ex: unknown) {
+    if (ex instanceof Error) {
+      throw new Error(
+        `${fnTag} Express verb method ${httpVerb} threw ` +
+          ` while registering endpoint: ${ex.stack}`
+      );
+    } else {
+      throw new RuntimeError(
+        `${fnTag} Express verb method ${httpVerb} threw ` +
+          ` while registering endpoint:`,
+        safeStringify(ex)
+      );
+    }
   }
 }

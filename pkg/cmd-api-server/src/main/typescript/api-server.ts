@@ -17,6 +17,7 @@ import * as OpenApiValidator from "express-openapi-validator";
 import compression from "compression";
 import bodyParser from "body-parser";
 import cors from "cors";
+import safeStringify from "fast-safe-stringify";
 
 import { Logger, LoggerProvider, Servers } from "@dci-lint/common";
 import { LintGitRepoService } from "@dci-lint/core";
@@ -105,8 +106,13 @@ export class ApiServer {
       }
 
       return { addressInfoCockpit, addressInfoApi };
-    } catch (ex) {
-      const errorMessage = `Failed to start ApiServer: ${ex.stack}`;
+    } catch (ex: unknown) {
+      let errorMessage;
+      if (ex instanceof Error) {
+        errorMessage = `Failed to start ApiServer: ${ex.stack}`;
+      } else {
+        errorMessage = `Failed to start ApiServer: ${safeStringify(ex)}`;
+      }
       this.log.error(errorMessage);
       this.log.error(`Attempting shutdown...`);
       await this.shutdown();
