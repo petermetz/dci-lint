@@ -25,7 +25,6 @@ log.debug("API_URL=%o", ApiUrl);
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
