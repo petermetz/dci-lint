@@ -40,7 +40,7 @@ test("finds target word in git repo", async (t: Test) => {
   t.comment(`Base directory for test files: ${testDir}`);
   t.comment(`Test file path in git: ${okFilePath}`);
 
-  const options: SimpleGitOptions = {
+  const options: Partial<SimpleGitOptions> = {
     baseDir: testDir,
     binary: "git",
     maxConcurrentProcesses: 1,

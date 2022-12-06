@@ -58,7 +58,7 @@ export class LintGitRepoService {
     const gitRootDir = path.join(workspace, localRepoDirName);
     this.log.debug("Git root dir=%o", gitRootDir);
     try {
-      const options: SimpleGitOptions = {
+      const options: Partial<SimpleGitOptions> = {
         baseDir: workspace,
         binary: "git",
         maxConcurrentProcesses: 1,
