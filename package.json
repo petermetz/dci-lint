@@ -6,6 +6,7 @@
   "scripts": {
     "configure": "yarn install --immutable && yarn run build:dev:backend",
     "install-yarn": "npm install -g yarn@1.19.0",
+    "reset:node-modules": "del-cli '**/node_modules'",
     "generate-api-server-config": "node ./tools/generate-api-server-config.js",
     "start": "node ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js",
     "start:cli": "node ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js",
