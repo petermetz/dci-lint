@@ -7,7 +7,7 @@
   "scripts": {
     "ng": "ng",
     "serve": "ng serve",
-    "serve:proxy": "ng serve -- --proxy-config proxy.conf.json",
+    "serve:proxy": "ng serve",
     "build:dev:frontend": "ng build",
     "build:prod:frontend": "ng build",
     "test": "ng test",
