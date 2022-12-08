@@ -1,8 +1,6 @@
-const fs = require("fs");
-const inquirer = require("inquirer");
-const {
-  ConfigService,
-} = require("../pkg/cmd-api-server/dist/lib/main/typescript/config/config-service");
+import fs from "fs";
+import inquirer from "inquirer";
+import { ConfigService } from "../pkg/cmd-api-server/dist/lib/main/typescript/config/config-service.js";
 
 const main = async () => {
   const configService = new ConfigService();
