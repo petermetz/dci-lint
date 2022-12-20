@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM debian:bullseye-20221205-slim
 
 SHELL ["/bin/bash", "-c"]
 
