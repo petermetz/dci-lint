@@ -1916,8 +1916,8 @@ __metadata:
     "@types/compression": 1.7.0
     "@types/convict": 5.2.1
     "@types/cors": 2.8.6
-    "@types/express": 4.17.13
-    "@types/express-http-proxy": 1.6.1
+    "@types/express": 4.17.15
+    "@types/express-http-proxy": 1.6.3
     "@types/joi": 14.3.4
     "@types/multer": 1.4.7
     "@types/node-forge": 0.9.3
@@ -1930,8 +1930,8 @@ __metadata:
     convict: 6.2.3
     convict-format-with-validator: 6.2.0
     cors: 2.8.5
-    express: 4.17.1
-    express-http-proxy: 1.6.0
+    express: 4.18.2
+    express-http-proxy: 1.6.3
     express-openapi-validator: 4.13.8
     fast-safe-stringify: 2.1.1
     joi: 14.3.1
@@ -4051,16 +4051,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express-http-proxy@npm:1.6.1":
-  version: 1.6.1
-  resolution: "@types/express-http-proxy@npm:1.6.1"
+"@types/express-http-proxy@npm:1.6.3":
+  version: 1.6.3
+  resolution: "@types/express-http-proxy@npm:1.6.3"
   dependencies:
     "@types/express": "*"
-  checksum: bffb4cfe4483bcd3050a17d866b01d94a7e9c52627c2e9c69b1cf923dc17080633bcdbe2663b38902313ad0392f35d70f3cd6c7cd0258823c95d2b7513dcef7a
+  checksum: 8e983b1a7d16bc15233b4ad72ffb4bc19c58cc7dbe2d151193c92b7a71bf991f8edecf6135b3ce071d9e430d46460aeade0fa124ef670585da7b29070727b9fb
   languageName: node
   linkType: hard
 
-"@types/express-serve-static-core@npm:*, @types/express-serve-static-core@npm:^4.17.18":
+"@types/express-serve-static-core@npm:*, @types/express-serve-static-core@npm:^4.17.18, @types/express-serve-static-core@npm:^4.17.31":
   version: 4.17.31
   resolution: "@types/express-serve-static-core@npm:4.17.31"
   dependencies:
@@ -4092,6 +4092,18 @@ __metadata:
     "@types/qs": "*"
     "@types/serve-static": "*"
   checksum: 12a2a0e6c4b993fc0854bec665906788aea0d8ee4392389d7a98a5de1eefdd33c9e1e40a91f3afd274011119c506f7b4126acb97fae62ae20b654974d44cba12
+  languageName: node
+  linkType: hard
+
+"@types/express@npm:4.17.15":
+  version: 4.17.15
+  resolution: "@types/express@npm:4.17.15"
+  dependencies:
+    "@types/body-parser": "*"
+    "@types/express-serve-static-core": ^4.17.31
+    "@types/qs": "*"
+    "@types/serve-static": "*"
+  checksum: b4acd8a836d4f6409cdf79b12d6e660485249b62500cccd61e7997d2f520093edf77d7f8498ca79d64a112c6434b6de5ca48039b8fde2c881679eced7e96979b
   languageName: node
   linkType: hard
 
@@ -9329,14 +9341,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express-http-proxy@npm:1.6.0":
-  version: 1.6.0
-  resolution: "express-http-proxy@npm:1.6.0"
+"express-http-proxy@npm:1.6.3":
+  version: 1.6.3
+  resolution: "express-http-proxy@npm:1.6.3"
   dependencies:
     debug: ^3.0.1
     es6-promise: ^4.1.1
     raw-body: ^2.3.0
-  checksum: 22707e9e884298cb797ce76e46204ea49efa37c591b321af3fa069234ae9669fa148f7879f7c8c95a8ce0f5cb6a327c5d1ae62b6ff030fcc361c33487bbba3d0
+  checksum: 67fa357a29404e22778cfa59e60cdf410d876caeeaab7d34946d40ac6555cfcc666a0fd28fc087149b1f9bbb8349b057ad575485331126b1b99b696ab2528488
   languageName: node
   linkType: hard
 
@@ -9398,7 +9410,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express@npm:^4.17.3":
+"express@npm:4.18.2, express@npm:^4.17.3":
   version: 4.18.2
   resolution: "express@npm:4.18.2"
   dependencies:
