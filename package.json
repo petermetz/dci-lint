@@ -5,7 +5,7 @@
   ],
   "scripts": {
     "configure": "yarn install --immutable && yarn run build:dev:backend",
-    "install-yarn": "npm install -g yarn@1.19.0",
+    "install-yarn": "corepack enable && corepack prepare yarn@3.3.0 --activate",
     "reset:node-modules": "del-cli '**/node_modules'",
     "generate-api-server-config": "node ./tools/generate-api-server-config.js",
     "start": "node ./pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js",

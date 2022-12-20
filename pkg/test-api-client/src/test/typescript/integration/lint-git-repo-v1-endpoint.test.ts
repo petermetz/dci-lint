@@ -7,7 +7,12 @@ import bodyParser from "body-parser";
 
 import { Configuration, DefaultApi as DciLintApi } from "@dci-lint/core-api";
 import { LintGitRepoV1Endpoint } from "@dci-lint/cmd-api-server";
-import { IListenOptions, LogLevelDesc, Servers } from "@dci-lint/common";
+import {
+  IListenOptions,
+  LoggerProvider,
+  LogLevelDesc,
+  Servers,
+} from "@dci-lint/common";
 import { LintGitRepoService, registerWebServiceEndpoint } from "@dci-lint/core";
 
 const logLevel: LogLevelDesc = "TRACE";
@@ -65,6 +70,11 @@ test.skip("Lint a git repo", async (t: Test) => {
 });
 
 test("respects the .dcilintignore configuration", async (t: Test) => {
+  const LOG = LoggerProvider.getOrCreate({
+    level: "DEBUG",
+    label: "lint-git-repo-v1-endpoint.test",
+  });
+
   const webApp = express();
   webApp.use(bodyParser.json({ limit: "25mb" }));
   const server = http.createServer(webApp);
@@ -74,6 +84,8 @@ test("respects the .dcilintignore configuration", async (t: Test) => {
     server,
   };
   const addressInfo = (await Servers.listen(listenOptions)) as AddressInfo;
+  LOG.debug("AddressInfo: %o", addressInfo);
+
   test.onFinish(async () => await Servers.shutdown(server));
 
   const endpoint = new LintGitRepoV1Endpoint({
@@ -84,6 +96,8 @@ test("respects the .dcilintignore configuration", async (t: Test) => {
 
   const { address, port } = addressInfo;
   const apiHost = `http://${address}:${port}`;
+  LOG.debug("API Host: %o", apiHost);
+
   const configuration = new Configuration({ basePath: apiHost });
   const apiClient = new DciLintApi(configuration);
 
