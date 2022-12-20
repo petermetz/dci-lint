@@ -12,7 +12,7 @@ const logLevel: LogLevelDesc = "TRACE";
 test("Lint a git repo", async (t: Test) => {
   const server = http.createServer();
   const listenOptions: IListenOptions = {
-    hostname: "localhost",
+    hostname: "127.0.0.1",
     port: 0,
     server,
   };
@@ -37,8 +37,8 @@ test("Lint a git repo", async (t: Test) => {
   await apiServer.start();
   test.onFinish(async () => await apiServer.shutdown());
 
-  const { address, port } = addressInfo;
-  const apiHost = `http://${address}:${port}`;
+  const { port } = addressInfo;
+  const apiHost = `http://127.0.0.1:${port}`;
   const configuration = new Configuration({ basePath: apiHost });
   const apiClient = new DciLintApi(configuration);
 
