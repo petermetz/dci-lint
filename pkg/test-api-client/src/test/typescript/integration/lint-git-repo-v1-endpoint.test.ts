@@ -94,8 +94,12 @@ test("respects the .dcilintignore configuration", async (t: Test) => {
   });
   registerWebServiceEndpoint(webApp, endpoint);
 
-  const { address, port } = addressInfo;
-  const apiHost = `http://${address}:${port}`;
+  const { port } = addressInfo;
+  // started hardcoding this as localhost since NodeJS v18 defaults to IPv6
+  // which is broken on GitHub CI action workflows for some reason...
+  // meaning that the address comes back as "::1" (which equals 127.0.0.1)
+  // but then the API server rejects it with a 404
+  const apiHost = `http://localhost:${port}`;
   LOG.debug("API Host: %o", apiHost);
 
   const configuration = new Configuration({ basePath: apiHost });
