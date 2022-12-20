@@ -32,6 +32,7 @@ jobs:
     - name: Set up JDK 11 (OpenAPI generator needs it)
       uses: actions/setup-java@v3.9.0
       with:
+        distribution: temurin
         java-version: '11' # The JDK version to make available on the path.
         java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
         architecture: x64 # (x64 or x86) - defaults to x64
