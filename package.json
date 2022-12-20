@@ -108,5 +108,6 @@
   },
   "lint-staged": {
     "./**/*.{ts,js}": "prettier --write --config .prettierrc.json"
-  }
+  },
+  "packageManager": "yarn@3.3.0"
 }
