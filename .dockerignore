@@ -36,3 +36,6 @@ bin/
 .tmp/
 lerna-debug.log
 .npmrc
+
+# Cover all the nested node_modules directories of pkgs as well
+**/node_modules

@@ -70,13 +70,13 @@ otherwise it's `2`, indicating an issue.
 
 To avoid the response being pretty-printed JSON, you can pass in the `--prety=false` flag via the CLI in addition to the `--request='{...}'` parameter. This will cause the JSON output to be printed on a single line.
 
-## Build container image locally
+## Build release container image locally
 
 ```sh
 DOCKER_BUILDKIT=1 docker build --build-arg NPM_PKG_VERSION=latest -f ./Dockerfile . -t dcil
 ```
 
-## Run locally via Docker
+## Run release container image locally via Docker
 
 ```sh
 docker \
@@ -86,6 +86,38 @@ docker \
   node_modules/@dci-lint/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js \
   lint-git-repo \
   --request='{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": ["something-mean"]}'
+```
+
+## Build development container image locally
+
+```sh
+DOCKER_BUILDKIT=1 docker build -f ./src.Dockerfile . -t dcil
+```
+
+## Run development container image locally via Docker
+
+*One-off Linting Request via CLI arguments:*
+
+```sh
+docker \
+  run \
+  --rm \
+  dcil \
+  pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js \
+  lint-git-repo \
+  --request='{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": ["something-mean"]}'
+```
+
+*Continuously Listen to Linting Requests via HTTP Server:*
+
+```sh
+docker \
+  run \
+  --rm \
+  --publish 3000:3000 \
+  --publish 4000:4000 \
+  dcil \
+  pkg/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js
 ```
 
 # Documentation
