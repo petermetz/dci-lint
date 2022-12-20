@@ -30,18 +30,18 @@ jobs:
 
     steps:
     - name: Set up JDK 11 (OpenAPI generator needs it)
-      uses: actions/setup-java@v1.4.3
+      uses: actions/setup-java@v3.9.0
       with:
         java-version: '11' # The JDK version to make available on the path.
         java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
         architecture: x64 # (x64 or x86) - defaults to x64
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2.1.2
+      uses: actions/setup-node@v3.5.1
       with:
         node-version: ${{ matrix.node-version }}
 
-    - uses: actions/checkout@v2.3.4
+    - uses: actions/checkout@v3.2.0
 
     - run: yarn install --immutable
     - run: yarn build
