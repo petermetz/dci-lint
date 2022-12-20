@@ -28,18 +28,18 @@ ENV TZ=Etc/UTC
 ENV NODE_ENV=production
 
 ENV NVM_DIR /home/${APP_USER}/.nvm
-ENV NODE_VERSION 16.8.0
+ENV NODE_VERSION 18.12.1
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # Install nvm with node and npm
 RUN mkdir -p ${NVM_DIR}
-RUN curl https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash \
+RUN curl https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash \
   && source $NVM_DIR/nvm.sh \
   && nvm install $NODE_VERSION \
   && nvm alias default $NODE_VERSION \
   && nvm use default \
-  && npm install -g npm@7.19.1
+  && npm install -g npm@8.19.2
 
 ARG NPM_PKG_VERSION=latest
 RUN npm install @dci-lint/cmd-api-server@${NPM_PKG_VERSION} --production
