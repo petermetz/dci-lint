@@ -1,0 +1,31 @@
+name: publish-npm
+
+on:
+  push:
+
+    # Publish `v1.2.3` tags as releases.
+    tags:
+      - v*
+
+jobs:
+
+  publish-npm:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3.2.0
+    - run: git fetch --unshallow --prune
+    - uses: actions/setup-node@v3.5.1
+      with:
+        always-auth: true
+        node-version: '18.12.1'
+        registry-url: 'https://registry.npmjs.org'
+    - name: install-dependencies
+      run: yarn install --immutable
+    - name: build-sources
+      run: yarn build
+    - name: lerna-publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: |
+        npm whoami
+        yarn lerna publish from-git --yes --loglevel=debug
