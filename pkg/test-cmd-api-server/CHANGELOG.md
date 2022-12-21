@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.3](https://github.com/petermetz/dci-lint/compare/v0.6.2...v0.6.3) (2022-12-21)
+
+**Note:** Version bump only for package @dci-lint/test-cmd-api-server
+
+
+
+
+
 ## [0.6.2](https://github.com/petermetz/dci-lint/compare/v0.5.1...v0.6.2) (2022-12-21)
 
 
