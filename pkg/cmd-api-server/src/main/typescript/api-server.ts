@@ -245,14 +245,14 @@ export class ApiServer {
     const openApiValidatorMiddleware = this.createOpenApiValidator();
     app.use(openApiValidatorMiddleware);
 
-    const healthcheckHandler = (req: Request, res: Response) => {
+    const healthCheckHandler = (req: Request, res: Response) => {
       res.json({
         success: true,
         createdAt: new Date(),
         memoryUsage: process.memoryUsage(),
       });
     };
-    app.get("/api/v1/api-server/healthcheck", healthcheckHandler);
+    app.get("/api/v1/api-server/health-check", healthCheckHandler);
 
     this.log.info(`Starting to install web services...`);
 

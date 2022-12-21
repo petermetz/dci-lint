@@ -96,8 +96,8 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ApiServerHealthcheckGet: async (options: any = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/api-server/healthcheck`;
+        healthCheckV1: async (options: any = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/api-server/health-check`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -136,8 +136,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1ApiServerHealthcheckGet(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthCheckResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ApiServerHealthcheckGet(options);
+        async healthCheckV1(options?: any): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<HealthCheckResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.healthCheckV1(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -156,8 +156,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ApiServerHealthcheckGet(options?: any): AxiosPromise<HealthCheckResponse> {
-            return localVarFp.apiV1ApiServerHealthcheckGet(options).then((request) => request(axios, basePath));
+        healthCheckV1(options?: any): AxiosPromise<HealthCheckResponse> {
+            return localVarFp.healthCheckV1(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -176,8 +176,8 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public apiV1ApiServerHealthcheckGet(options?: any) {
-        return DefaultApiFp(this.configuration).apiV1ApiServerHealthcheckGet(options).then((request) => request(this.axios, this.basePath));
+    public healthCheckV1(options?: any) {
+        return DefaultApiFp(this.configuration).healthCheckV1(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

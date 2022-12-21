@@ -51,9 +51,10 @@
     }
   },
   "paths": {
-    "/api/v1/api-server/healthcheck": {
+    "/api/v1/api-server/health-check": {
       "get": {
         "summary": "Can be used to verify liveness of an API server instance",
+        "operationId": "healthCheckV1",
         "description": "Returns the current timestamp of the API server as proof of health/liveness",
         "parameters": [],
         "responses": {
