@@ -4,7 +4,7 @@ on: [pull_request, push]
 
 jobs:
   DCI-Lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     name: DCI-Lint
     steps:
     - name: Lint Git Repo
@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       max-parallel: 16
       matrix:
-        os: [ubuntu-20.04]
+        os: [ubuntu-22.04]
         node-version: [v16.19.0, v18.12.1]
         experimental: [false]
 
