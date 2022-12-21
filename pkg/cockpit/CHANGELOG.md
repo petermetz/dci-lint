@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/petermetz/dci-lint/compare/v0.5.1...v0.6.2) (2022-12-21)
+
+
+### Bug Fixes
+
+* **cockpit:** address CVE-2021-3803 by upgrading @ionic/angular-toolkit ([a56b657](https://github.com/petermetz/dci-lint/commit/a56b657d189d8cb41bdac644525b5805204c1832))
+* **cockpit:** upgrade to angular v15 due to vulnerabilities ([ed45312](https://github.com/petermetz/dci-lint/commit/ed45312757c4d268f7fdfb0e316f74291c132cfa))
+* **deps:** address CVE-2022-24999 by ensuring qs is >v6.7.3 ([9dcf341](https://github.com/petermetz/dci-lint/commit/9dcf3413186b465f4eb2f91f4709725ced9f3e64))
+
+
+
+
+
 ## [0.6.1](https://github.com/petermetz/dci-lint/compare/v0.6.0...v0.6.1) (2021-09-16)
 
 **Note:** Version bump only for package @dci-lint/cockpit

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/petermetz/dci-lint/compare/v0.5.1...v0.6.2) (2022-12-21)
+
+
+### Bug Fixes
+
+* **deps:** address CVE-2022-24999 by ensuring qs is >v6.7.3 ([9dcf341](https://github.com/petermetz/dci-lint/commit/9dcf3413186b465f4eb2f91f4709725ced9f3e64))
+* **test-api-client:** attempt [#2](https://github.com/petermetz/dci-lint/issues/2) on IPv6 NodeJS v18 problems ([f2abf8e](https://github.com/petermetz/dci-lint/commit/f2abf8ed8f3730516d064cea6dd80783603caaa2))
+
+
+
+
+
 ## [0.6.1](https://github.com/petermetz/dci-lint/compare/v0.6.0...v0.6.1) (2021-09-16)
 
 **Note:** Version bump only for package @dci-lint/test-api-client

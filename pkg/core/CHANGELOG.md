@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/petermetz/dci-lint/compare/v0.5.1...v0.6.2) (2022-12-21)
+
+
+### Bug Fixes
+
+* **cockpit:** upgrade to angular v15 due to vulnerabilities ([ed45312](https://github.com/petermetz/dci-lint/commit/ed45312757c4d268f7fdfb0e316f74291c132cfa))
+* **core:** git repo linter now does fetch instead of pull ([19f5d65](https://github.com/petermetz/dci-lint/commit/19f5d653ee3190d15b8d5d0f1b248c993bc9e35f))
+* **core:** lint git repo service now does git pull --all ([e4f2c09](https://github.com/petermetz/dci-lint/commit/e4f2c09df6f5ce5475f03e8972c05035cdf13d5c))
+
+
+
+
+
 ## [0.6.1](https://github.com/petermetz/dci-lint/compare/v0.6.0...v0.6.1) (2021-09-16)
 
 
