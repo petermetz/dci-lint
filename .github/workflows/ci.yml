@@ -1,7 +1,5 @@
 name: CI
 
-on: [pull_request, push]
-
 jobs:
   DCI-Lint:
     runs-on: ubuntu-22.04
@@ -47,3 +45,13 @@ jobs:
     - run: yarn install --immutable
     - run: yarn build
     - run: yarn test:all --bail
+
+'on':
+  pull_request:
+    branches:
+      - main
+      - dev
+  push:
+    branches:
+      - main
+      - dev
