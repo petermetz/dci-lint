@@ -8,3 +8,5 @@ export {
   IPluginImport,
   IApiServerOptions,
 } from "./config/config-service";
+
+export * from "./generated/openapi/typescript-axios/index";

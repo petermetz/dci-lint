@@ -297,11 +297,28 @@ export class ApiServer {
   }
 
   createOpenApiValidator(): OpenApiRequestHandler[] {
+    // TODO: @petermetz Use a more robust, recursive merging utility for this.
+    // On the one hand this code is simpler and does not add more dependencies.
+    // On the other hand it is the prime suspect if any strange bugs occur
+    // regarding the OpenAPI spec validation...
+    const apiSpec = {
+      ...OAS_API_SERVER,
+      components: {
+        schemas: {
+          ...OAS_API_SERVER.components.schemas,
+          ...OAS_CORE_API.components.schemas,
+        },
+      },
+      paths: {
+        ...OAS_API_SERVER.paths,
+        ...OAS_CORE_API.paths,
+      },
+    };
+
+    this.log.info("Merged OpenAPI spec for request validation: %o", apiSpec);
+
     return OpenApiValidator.middleware({
-      apiSpec: {
-        ...OAS_API_SERVER,
-        ...OAS_CORE_API,
-      } as any,
+      apiSpec: apiSpec as never,
       validateRequests: true,
       validateResponses: false,
     });
