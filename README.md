@@ -78,6 +78,8 @@ DOCKER_BUILDKIT=1 docker build --build-arg NPM_PKG_VERSION=latest -f ./Dockerfil
 
 ## Run release container image locally via Docker
 
+*One-off Linting Request via CLI arguments:*
+
 ```sh
 docker \
   run \
@@ -86,6 +88,16 @@ docker \
   node_modules/@dci-lint/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js \
   lint-git-repo \
   --request='{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": ["something-mean"]}'
+```
+
+*Continuously Listen to Linting Requests via HTTP Server:*
+
+```sh
+docker \
+  run \
+  --rm \
+  dcil \
+  node_modules/@dci-lint/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-server.js
 ```
 
 ## Build development container image locally

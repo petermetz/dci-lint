@@ -11,7 +11,7 @@ EXPOSE 3000 4000
 RUN groupadd --gid 1000 appuser \
   && useradd --uid 1000 --gid appuser --shell /bin/bash --create-home ${APP_USER}
 
-RUN apt update && apt install -y curl git
+RUN apt update && apt install -y curl wget git
 
 # Install OpenJDK 11
 ENV DEBIAN_FRONTEND=noninteractive
