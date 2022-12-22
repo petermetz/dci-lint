@@ -1,0 +1,46 @@
+# fly.toml file generated for dci-lint on 2022-12-21T22:12:17-08:00
+
+app = "dci-lint"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
+
+[experimental]
+  allowed_public_ports = [3000, 4000]
+  auto_rollback = true
+
+[[services]]
+    internal_port = 4000
+    protocol = 'tcp'
+
+    [[services.ports]]
+        handlers = ['http']
+        port = 4000
+
+[[services]]
+  http_checks = []
+  internal_port = 3000
+  processes = ["app"]
+  protocol = "tcp"
+  script_checks = []
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+    type = "connections"
+
+  [[services.ports]]
+    force_https = true
+    handlers = ["http"]
+    port = 80
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 443
+
+  [[services.tcp_checks]]
+    grace_period = "1s"
+    interval = "15s"
+    restart_limit = 0
+    timeout = "2s"

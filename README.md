@@ -11,15 +11,18 @@ Follow these instructions to set up a GitHub Action that automatically lints inc
 
 ## Public test instance
 
-Accessible at: https://dci-lint.herokuapp.com/
+The GUI and the REST API are both accessible at these addresses (backed by the same free-tier [fly.io](https://fly.io) instance):
+- https://dci-lint.top/
+- https://www.dci-lint.top/
+- https://dci-lint.fly.dev
 
 ## Self-hosting on your own hardware
 
 You can self host DCI-lint by running the container image as shown below,
-after which you can access the GUI locally at http:/localhost:3000
+after which you can access the GUI locally at http://localhost:3000
 
 ```sh
-docker run --rm -e PORT=3000 -p 3000:3000 ghcr.io/petermetz/dci-lint:0.5.1
+docker run --rm -e PORT=3000 -p 3000:3000 ghcr.io/petermetz/dci-lint:0.6.4
 ```
 
 If you'd rather use the command line interface instead of the web interface,
@@ -30,7 +33,7 @@ docker \
   run \
   --rm \
   --env DCI_LINT_LOG_LEVEL=DEBUG \
-  ghcr.io/petermetz/dci-lint:0.5.1 \
+  ghcr.io/petermetz/dci-lint:0.6.4 \
   node_modules/@dci-lint/cmd-api-server/dist/lib/main/typescript/cmd/dci-lint-cli.js \
   lint-git-repo \
   --request='{"cloneUrl": "https://github.com/petermetz/dci-lint.git", "targetPhrasePatterns": ["something-mean"]}'
@@ -39,7 +42,7 @@ docker \
 
 ## Command Line Interface
 
-After the project has been built, the CLI can be invoked as follows:
+After the project has been built (`$ yarn configure`), the CLI can be invoked as follows:
 
 ```sh
 DCI_LINT_LOG_LEVEL=ERROR node \
@@ -68,7 +71,7 @@ whether the linter found any errors or not.
 If there were no errors then the exit code is `0`
 otherwise it's `2`, indicating an issue.
 
-To avoid the response being pretty-printed JSON, you can pass in the `--prety=false` flag via the CLI in addition to the `--request='{...}'` parameter. This will cause the JSON output to be printed on a single line.
+To avoid the response being pretty-printed JSON, you can pass in the `--pretty=false` flag via the CLI in addition to the `--request='{...}'` parameter. This will cause the JSON output to be printed on a single line.
 
 ## Build release container image locally
 
